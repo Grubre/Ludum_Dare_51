@@ -1,0 +1,11 @@
+build/
+compile_commands.json
+compile_flags.txt
+.vscode/
+.vs/
+.cmake
+.cache
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
