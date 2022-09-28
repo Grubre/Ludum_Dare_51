@@ -1,6 +1,5 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include "math/vector.hpp"
 #include <cstdint>
 
 int main()
