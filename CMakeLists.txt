@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 project(
     ludum_dare_51
     VERSION 0.0.1
@@ -25,14 +24,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}\
 ")
 
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}\
-                          -fsanitize=address\
-")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}\
+ #                         -fsanitize=address\
+#")
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}\
-                                 -fsanitize=address\
-")
+#set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}\
+ #                                -fsanitize=address\
+#")
 
 
 file(GLOB_RECURSE SRC src/*.cpp)
