@@ -47,8 +47,6 @@ if(STATIC_LIBS)
     set(SFML_STATIC_LIBRARIES TRUE)
 endif()
 
-
-set(SFML_DIR "lib/SFML/lib/cmake/SFML")
 find_package(SFML COMPONENTS system audio window graphics REQUIRED)
 
 
