@@ -40,6 +40,8 @@ file(GLOB_RECURSE SRC src/*.cpp)
 
 add_executable(main ${SRC})
 
+include_directories(src)
+
 
 if(STATIC_LIBS)
     set(SFML_STATIC_LIBRARIES TRUE)
