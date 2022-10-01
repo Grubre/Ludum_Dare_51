@@ -12,6 +12,7 @@ Layers* Layers::m_instance = nullptr;
 
 using layer_ptr = std::shared_ptr<sf::RenderTexture>;
 
+
 Layers* Layers::get_instance()
 {
     if(m_instance == nullptr)
@@ -61,3 +62,29 @@ layer_ptr Layers::operator[](std::string name)
 {
     return get_layer(name);
 }
+
+void Layers::clear_all_layers() {
+    for(int i = m_layers.size()-1; i >= 0; i--)
+    {
+        m_layers[i]->clear(sf::Color(0,0,0,0));
+    }
+}
+
+void Layers::draw_all_layers(sf::RenderWindow& window) {
+    for(int i = m_layers.size()-1; i >= 0; i--)
+    {
+        m_layers[i]->display();
+        window.draw(sf::Sprite(m_layers[i]->getTexture()));
+    }
+}
+
+// Przydałoby się, ale jeszcze nie wiem jak 
+// void Layers::resize_all_layers(const sf::RenderWindow& window) {
+//     for(int i = m_layers.size()-1; i >= 0; i--)
+//     {
+//      
+//     }
+//}
+
+
+
