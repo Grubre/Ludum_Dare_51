@@ -16,20 +16,14 @@ class Grid : public Node{
         void setTile(engine::Vec2i position, unsigned int tileID);
         void setTile(unsigned int position, unsigned int tileID);
 
-
     private:
         engine::Vec2i size{};
         engine::Vec2i tileSize{};
 
         std::vector<Tile> tiles;
-        AtlasManager* atlasManager;
-        AtlasManager* atlasManagerColl;
-
-
-        const Layers* layers = Layers::get_instance();
 
     protected:
-        void onDraw() const override;
+        void onDraw(Renderer &renderer) const override;
         void onUpdate(const sf::Time& delta) override;
 };
 

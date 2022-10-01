@@ -18,11 +18,11 @@ void Node::remove_child(StrongNode child) {
     children.erase(std::find(children.begin(),children.end(),child));
 }
 
-void Node::draw() const {
-    onDraw();
+void Node::draw(Renderer &renderer) const {
+    onDraw(renderer);
 
     for(auto child : children) {
-        child->draw();
+        child->draw(renderer);
     }
 }
 

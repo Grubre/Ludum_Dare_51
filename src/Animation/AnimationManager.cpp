@@ -54,7 +54,6 @@ void AnimationManager::setDefault(std::string animtion)
 std::shared_ptr<sf::Texture> AnimationManager::getTexture()
 {
     return loader->returnTexture(fileName(currentAnimation, currentIndex));
-    return nullptr;
 }
 
 sf::IntRect AnimationManager::getIntRect()

@@ -1,5 +1,4 @@
 #pragma once
-#include "Layers/Layers.hpp"
 #include "Standard/event.hpp"
 #include "Standard/math.hpp"
 #include <SFML/Graphics.hpp>
@@ -7,6 +6,7 @@
 #include <optional>
 #include <unordered_map>
 #include <vector>
+#include "Renderer/Renderer.hpp"
 
 class Node;
 
@@ -25,18 +25,19 @@ class Node : public std::enable_shared_from_this<Node>
     WeakNode parent;
 
   protected:
-    Layers::layer_ptr render_layer = Layers::get_instance()->get_layer(1);
+    unsigned int render_layer_id = 1;
     sf::Transformable local_transform;
     sf::Transformable global_transform;
     sf::Color color_id;
-    virtual void onDraw() const {}
+    virtual void onDraw(Renderer &renderer) const {}
     virtual void onUpdate([[maybe_unused]] const sf::Time& delta) {}
 
   public:
-    // Konstruktor musi być publiczny, żeby działała funkcja 'create', ale lepiej z niego nie korzystać
+    // Konstruktor musi być publiczny, żeby działała funkcja 'create', ale
+    // lepiej z niego nie korzystać
     Node() = default;
     // UPDATE FUNCTIONS
-    void draw() const;
+    void draw(Renderer &renderer) const;
     void update(const sf::Time& delta);
     void update_transform();
     // MANAGING CHILDREN / PARENTS
@@ -73,7 +74,7 @@ class Node : public std::enable_shared_from_this<Node>
 
     sf::Vector2f getGlobalTranslation()
     {
-        return global_transform.getPosition();
+      return global_transform.getPosition();
     }
     float getGlobalRotation() { return global_transform.getRotation(); }
     sf::Vector2f getGlobalScale() { return global_transform.getScale(); }
