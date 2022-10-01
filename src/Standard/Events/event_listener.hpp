@@ -16,7 +16,7 @@ class EventListener {
         //}
         //EventListenery najlepiej tworzyć jak wyżej
         //Zmienne, które zbieramy do funkcji (np. this) muszą żyć conajmniej tyle, co ten listener
-        EventListener(std::function<void(Ts...)> f) {
+        explicit EventListener(std::function<void(Ts...)> f) {
             this->f = std::make_shared<std::function<void(Ts...)>>(f);
         }
  

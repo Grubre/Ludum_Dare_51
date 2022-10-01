@@ -10,9 +10,9 @@ namespace engine {
         sf::Vertex last_vertex;
 
         private:
-            std::vector<sf::Vertex> triangulate_line(sf::Vertex start, sf::Vertex end) {
-                Vec2f start_vec = Vec2f(start.position);
-                Vec2f end_vec = Vec2f(end.position);
+            std::vector<sf::Vertex> triangulate_line(sf::Vertex start, sf::Vertex end) const {
+                auto start_vec = Vec2f(start.position);
+                auto end_vec = Vec2f(end.position);
 
                 Vec2f line_dir = (end_vec - start_vec).norm();
 
@@ -32,10 +32,8 @@ namespace engine {
                 target.draw(triangled_vertices, states);
             }
 
-            PolyLine(sf::Vertex start_point, float thickness) {
+            PolyLine(sf::Vertex start_point, float thickness) : thickness(thickness), last_vertex(start_point) {
                 //triangled_vertices.resize(1000);
-                last_vertex = start_point;
-                this->thickness = thickness;
             }
 
             void append_vertex(sf::Vertex vertex) {
@@ -52,9 +50,9 @@ namespace engine {
         float thickness;
 
         private:
-            std::vector<sf::Vertex> triangulate_line(sf::Vertex start, sf::Vertex end) {
-                Vec2f start_vec = Vec2f(start.position);
-                Vec2f end_vec = Vec2f(end.position);
+            std::vector<sf::Vertex> triangulate_line(sf::Vertex start, sf::Vertex end) const {
+                auto start_vec = Vec2f(start.position);
+                auto end_vec = Vec2f(end.position);
 
                 Vec2f line_dir = (end_vec - start_vec).norm();
 
@@ -74,8 +72,7 @@ namespace engine {
                 target.draw(triangled_vertices, states);
             }
 
-            DisconnectedLine(float thickness) {
-                this->thickness = thickness;
+            explicit DisconnectedLine(float thickness) : thickness(thickness) {
             }
 
             void append_segment(sf::Vertex start, sf::Vertex end) {

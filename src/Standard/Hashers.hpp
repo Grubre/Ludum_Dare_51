@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-
 namespace std {
   template <>
   struct hash<sf::Color>
@@ -16,7 +15,7 @@ namespace std {
       // second and third and combine them using XOR
       // and bit shifting:
 
-      int p1 = 73856093,p2 = 19349663,p3 = 83492791;
+      constexpr int p1 = 73856093,p2 = 19349663,p3 = 83492791;
 
       return (k.r * p1) ^ (k.g * p2) ^ (k.b * p3);
     }

@@ -11,44 +11,44 @@ namespace engine
             T x;
             T y;
             
-            Vec2() : x(0), y(0) {}
-            Vec2(sf::Vector2<T> vec) : x(vec.x), y(vec.y) {}
-            Vec2(T x, T y) : x(x), y(y) {}
+            constexpr Vec2() : x(0), y(0) {}
+            explicit Vec2(sf::Vector2<T> vec) : x(vec.x), y(vec.y) {}
+            constexpr Vec2(T x, T y) : x(x), y(y) {}
 
-            T dot(const Vec2<T> &rhs) const {
+            constexpr T dot(const Vec2<T> &rhs) const {
                 return x*rhs.x + y*rhs.y;
             }
 
-            T length_sq() const {
+            constexpr T length_sq() const {
                 return x*x + y*y;
             }
 
-            float length() const {
+            constexpr float length() const {
                 return std::sqrt(length_sq());
             }
 
-            Vec2<float> norm() const {
+            constexpr Vec2<float> norm() const {
                 float len = length();
                 return Vec2<float>(x/len,y/len);
             }
 
-            Vec2<T> perpendicular() const  {
+            constexpr Vec2<T> perpendicular() const  {
                 return {-y,x};
             }
 
-            Vec2<float> interpolate(float scalar) const {
+            constexpr Vec2<float> interpolate(float scalar) const {
                 return (*this) * scalar;
             }
 
             //konwersje
-            operator sf::Vector2<T>() const {
+            constexpr explicit operator sf::Vector2<T>() const {
                 return {x, y};
             }
     };
 
-    typedef Vec2<int> Vec2i;
-    typedef Vec2<double> Vec2d;
-    typedef Vec2<float> Vec2f;
+    using Vec2i = Vec2<int>;
+    using Vec2d = Vec2<double>;
+    using Vec2f = Vec2<float>;
 
     //unarny minus
     template<typename T> 
