@@ -84,8 +84,8 @@ private:
         body.setTextureRect(animationManager.getIntRect());
     }
 
-    void onDraw() const override 
+    void onDraw(Renderer &renderer) const override 
     {
-        render_layer->draw(body);
+        renderer.draw_object_on_layer(body, 1);
     }
 };
