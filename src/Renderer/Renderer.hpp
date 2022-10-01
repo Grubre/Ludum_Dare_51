@@ -19,7 +19,7 @@ class Renderer {
             void resize_all_layers(const sf::RenderWindow& window);
 
         private:
-            std::vector<Layer> m_layers;
+            std::vector<Layer*> m_layers;
     };
 
     sf::RenderWindow window;
@@ -28,9 +28,13 @@ class Renderer {
     public:
         Renderer(unsigned int width, unsigned int height) : window(sf::VideoMode(width,height), "LD 51") {
             window.setVerticalSyncEnabled(true);
+            layers.add_layer(window);
+            layers.add_layer(window);
+            layers.add_layer(window);
         }
 
         void begin_drawing() {
+            window.clear();
             layers.clear_all_layers();
         }
 
@@ -40,6 +44,7 @@ class Renderer {
 
         void finish_drawing() {
             layers.draw_all_layers(window);
+            window.display();
         }
 
         bool is_open() {
