@@ -21,18 +21,17 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}\
                     -Wall\
                     -Wextra\
                     -Wpedantic\
-                    -Werror\
 ")
 
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}\
-                          -fsanitize=address\
-")
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}\
+#                           -fsanitize=address\
+# ")
 
 
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}\
-                                 -fsanitize=address\
-")
+# set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}\
+#                                  -fsanitize=address\
+# ")
 
 
 file(GLOB_RECURSE SRC src/*.cpp)
