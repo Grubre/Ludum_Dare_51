@@ -31,7 +31,7 @@ int main() {
   window.setVerticalSyncEnabled(true);
   sf::Clock delta_clock;
 
-  auto layers = Layers::get_instance();
+  auto *layers = Layers::get_instance();
 
   layers->add_layer(window, "GUI");
   layers->add_layer(window, "Objects");

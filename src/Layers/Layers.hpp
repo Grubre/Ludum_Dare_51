@@ -18,12 +18,12 @@ class Layers
 
     //Managing Layers
     void add_layer(const sf::RenderWindow& window, std::string name = "layer");
-    layer_ptr get_layer(unsigned long id = 1);
-    layer_ptr get_layer(std::string name);
+    layer_ptr get_layer(unsigned long id = 1) const;
+    layer_ptr get_layer(const std::string& name) const;
     std::vector<layer_ptr>& get_layers();
 
-    layer_ptr operator[](unsigned long id);
-    layer_ptr operator[](std::string name);
+    layer_ptr operator[](unsigned long id) const;
+    layer_ptr operator[](const std::string &name) const;
 
     //Operations
     void clear_all_layers();
@@ -35,8 +35,4 @@ class Layers
 
     std::vector<layer_ptr> m_layers;
     std::unordered_map<std::string, layer_ptr> m_mappings;
-
-  private:
-    Layers() {}
-    ~Layers() {}
 };

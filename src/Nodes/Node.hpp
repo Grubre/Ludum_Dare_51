@@ -46,10 +46,10 @@ class Node : public std::enable_shared_from_this<Node>
     // FACTORY PATTERN
     template<class T, typename... Us>
     requires DerivedFromNode<T, Us...>
-    static std::shared_ptr<T> create(StrongNode parent, Us...);
+    static std::shared_ptr<T> create(StrongNode parent, Us... /*values*/);
     template<class T, typename... Us>
     requires DerivedFromNode<T, Us...>
-    static std::shared_ptr<T> create(Us...);
+    static std::shared_ptr<T> create(Us... /*values*/);
 
     // GETTERS AND SETTERS
     void setActive(bool _active);
