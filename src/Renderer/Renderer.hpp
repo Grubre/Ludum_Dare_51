@@ -28,6 +28,7 @@ class Renderer {
         Renderer(unsigned int width, unsigned int height);
         void begin_drawing();
         void draw_object_on_layer(const sf::Drawable &object, int id_layer);
+        void draw_object_on_layer(const sf::Drawable &object, int id_layer, const sf::RenderStates& opt_render_states);
         void finish_drawing();
         bool is_open();
         bool poll_event(sf::Event &event);

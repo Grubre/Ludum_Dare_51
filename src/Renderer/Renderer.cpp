@@ -56,6 +56,11 @@ void Renderer::draw_object_on_layer(const sf::Drawable &object, int id_layer) {
     layers.get_layer(id_layer)->draw(object);
 };
 
+void Renderer::draw_object_on_layer(const sf::Drawable &object, int id_layer, const sf::RenderStates& opt_render_states) {
+    layers.get_layer(id_layer)->draw(object,opt_render_states);
+};
+
+
 void Renderer::finish_drawing() {
     layers.draw_all_layers(window);
     window.display();

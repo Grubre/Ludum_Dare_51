@@ -4,12 +4,12 @@
 class Grid : public Node{
     public:
         struct Tile {
-            Tile() = default;
+            Tile() = delete;
             Tile(unsigned int tile, engine::Vec2i pos) : tile(tile), pos(pos) {}
             unsigned int tile{};
             engine::Vec2i pos{};
         };
-        Grid(engine::Vec2i size, const std::string& tilesetName, engine::Vec2i tileSize);
+        Grid(engine::Vec2i size, const std::string& tileSetPath, engine::Vec2i tileSize);
 
         void setTile(engine::Vec2i position, unsigned int tileID);
 
@@ -20,6 +20,8 @@ class Grid : public Node{
         std::vector<Tile> tiles;
 
         sf::VertexArray vertices;
+
+        std::shared_ptr<sf::Texture> tileSet;
 
     protected:
         void onDraw(Renderer &renderer) const override;

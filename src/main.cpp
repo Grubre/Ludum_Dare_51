@@ -5,6 +5,7 @@
 #include "Nodes/Node.hpp"
 #include "Nodes/TestingShape.hpp"
 #include "Renderer/Renderer.hpp"
+#include "Nodes/Grid.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -31,6 +32,8 @@ int main() {
 
   std::shared_ptr<Node> root = Node::create<Node>();
 
+  Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
+
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
   while (renderer.is_open()) {
@@ -47,7 +50,8 @@ int main() {
     // Clear screen
     renderer.begin_drawing();
     // Testing code
-    ts->draw(renderer);
+    // ts->draw(renderer);
+    grid.draw(renderer);
 
     testAnimationManager.update(delta, false);
     test.setTexture(testAnimationManager.getTexture().get());
