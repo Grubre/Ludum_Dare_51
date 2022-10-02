@@ -1,4 +1,5 @@
 #include <iostream>
+#include <optional>
 #include "Standard/math.hpp"
 #include <SFML/Graphics.hpp>
 

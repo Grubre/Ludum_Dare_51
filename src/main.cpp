@@ -8,6 +8,8 @@
 #include "Renderer/Renderer.hpp"
 #include "Nodes/Wave.hpp"
 #include "Nodes/Grid.hpp"
+#include "Standard/KeymapManager.hpp"
+#include "Nodes/SortNode.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -26,14 +28,16 @@ int main() {
   musicSystem->setVolume("xDeviruchi - Minigame.wav", 0.3);
   soundSystem->playSound("blipSelect.wav");
 
-  TextureLoaderPrototypeFactory::getInstance("assets/Textures/");
+  AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
 
 
   sf::Clock delta_clock;
 
   std::shared_ptr<Node> root = Node::create<Node>();
 
-  std::shared_ptr<Wave> test = Wave::create<Wave>(sf::Vector2f(100, 100));
+  auto ysort = YSort::create<YSort>();
+
+  std::shared_ptr<Wave> test = Wave::create<Wave>(ysort, sf::Vector2f(100, 100));
   test->addEnemy("Orc1", 30);
   test->addWaypoint({100, 500});
   test->addWaypoint({300, 500});
@@ -45,6 +49,12 @@ int main() {
   test->addWaypoint({1200, 700});
   Grid grid({50,50}, "./assets/Tilesets/outdoors.png", {16,16});
 
+  grid.setScale({5,5});
+
+  KeymapManager keymapManager{};
+  keymapManager.register_keymap(sf::Keyboard::Num1, [&test](){test->TurnOnWave();});
+  keymapManager.register_keymap(sf::Keyboard::Num2, [&test](){test->TurnOffWave();});
+
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
   while (renderer.is_open()) {
@@ -52,7 +62,7 @@ int main() {
     sf::Event event{};
     while (renderer.poll_event(event)) {
       // Close window: exit
-      if (event.type == sf::Event::Closed)
+    if (event.type == sf::Event::Closed)
         renderer.close();
     }
 
@@ -61,22 +71,12 @@ int main() {
     // Clear screen
     renderer.begin_drawing();
     // Testing code
-    // ts->draw(renderer);
+    ysort->update(delta);
     grid.draw(renderer);
+    ysort->draw(renderer);
 
-   test->update(delta);
+    keymapManager.check_keypresses();
 
-   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-   {
-    test->TurnOnWave();
-   }
-
-   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-   {
-    test->TurnOffWave();
-   }
-
-    test->draw(renderer);
     renderer.finish_drawing();
   }
   return EXIT_SUCCESS;
