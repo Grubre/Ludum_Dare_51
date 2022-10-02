@@ -18,8 +18,6 @@ class Enemy : public MovingNode
 
     Enemy(EnemyPrototype p);
 
-    void setPosition(sf::Vector2f newPosition);
-
     void stopMoving();
 
     void startMoving();

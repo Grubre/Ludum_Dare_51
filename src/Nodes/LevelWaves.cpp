@@ -2,17 +2,6 @@
 
 std::string LevelWaves::directory = "";
 
-LevelWaves::LevelWaves(std::string _levelName) : levelName(_levelName)
-{
-    isInfoLoaded = false;
-    currentTime = 20;
-    index = 0;
-    if(directory == "")
-    {
-        std::cout << "Levelwaves directory not set, use LevelWaves::setDirectory(\"\")" << std::endl;
-    }
-}
-
 void LevelWaves::loadInfo()
 {
     std::ifstream level(directory + levelName);
@@ -26,9 +15,8 @@ void LevelWaves::loadInfo()
         {
             case 'w':
             {
-                 
                 level >> activeWave;
-                waves[activeWave].push_back(create<Wave>(shared_from_this()));
+                waves[activeWave].push_back(create<Wave>(shared_from_this(), ysort));
             }
             break;
             
@@ -64,8 +52,10 @@ void LevelWaves::setDirectory(std::string _directory)
 
 void LevelWaves::nextWave()
 {
+    if(isWaveOn())
+        return;
     index++;
-    for(int i = 0; i < index; i++)
+    for(long unsigned int i = 0; i < index; i++)
     {
         for(std::shared_ptr<Wave> w : waves[i])
         {
@@ -95,7 +85,7 @@ bool LevelWaves::isWaveOn()
 
 void LevelWaves::stopWaves()
 {
-    for(int i = 0; i < index; i++)
+    for(long unsigned int i = 0; i < index; i++)
     {
         for(std::shared_ptr<Wave> w : waves[i])
         {

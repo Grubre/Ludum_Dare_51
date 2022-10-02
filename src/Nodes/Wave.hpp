@@ -1,12 +1,16 @@
 #pragma once
 #include "Enemy.hpp"
 #include "EnemyPrototype.hpp"
+#include "SortNode.hpp"
 #include <vector>
 #include <string>
 
 class Wave : public Node
 {
 public:
+    
+    Wave(std::shared_ptr<YSort> _ysort) : ysort(_ysort)
+    {}
     void addEnemy(std::string name, int amount);
     void addWaypoint(sf::Vector2f waypoint);
 
@@ -15,6 +19,7 @@ public:
     void TurnOffWave();
 
 private:
+    std::shared_ptr<YSort> ysort;
     bool isWaveOn = false;
     std::vector<std::string> enemiesNames;
     float timeBetween;

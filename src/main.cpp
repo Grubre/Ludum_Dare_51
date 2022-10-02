@@ -9,6 +9,7 @@
 #include "Nodes/LevelWaves.hpp"
 #include "Nodes/Grid.hpp"
 #include "Standard/KeymapManager.hpp"
+#include "Nodes/SortNode.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -31,14 +32,17 @@ int main() {
   Renderer renderer(w, h);
 
   sf::Clock delta_clock;
+  auto TESTMAINysort = YSort::create<YSort>();
 
   std::shared_ptr<Node> root = Node::create<Node>();
-  std::shared_ptr<LevelWaves> test = LevelWaves::create<LevelWaves>("level1.lvl");
+  std::shared_ptr<LevelWaves> test = LevelWaves::create<LevelWaves>(TESTMAINysort, "level1.lvl");
 
   Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
+
   grid.setScale({5,5});
 
   KeymapManager keymapManager{};
+  keymapManager.register_keymap(sf::Keyboard::Num1, [&test](){test->nextWave();});
 
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
@@ -47,7 +51,7 @@ int main() {
     sf::Event event{};
     while (renderer.poll_event(event)) {
       // Close window: exit
-      if (event.type == sf::Event::Closed)
+    if (event.type == sf::Event::Closed)
         renderer.close();
     }
 
@@ -57,9 +61,12 @@ int main() {
     renderer.begin_drawing();
     // Testing code
     test->update(delta);
+    TESTMAINysort->update(delta);
 
-    grid.draw(renderer);
+
     test->draw(renderer);
+    grid.draw(renderer);
+    TESTMAINysort->draw(renderer);
 
     keymapManager.check_keypresses();
 

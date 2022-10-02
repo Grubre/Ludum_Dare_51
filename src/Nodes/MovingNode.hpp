@@ -17,7 +17,7 @@ protected:
     AnimationManager animationManager;
     sf::RectangleShape body;
     float speed;
-    sf::Vector2f NewPositionByWaypoints(const sf::Time& delta);
+    sf::Vector2f NewTranslateByWaypoints(const sf::Time& delta);
 
 private:
     std::queue<sf::Vector2f> waypoints;

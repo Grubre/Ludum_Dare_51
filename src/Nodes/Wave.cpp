@@ -8,6 +8,7 @@ void Wave::addEnemy(std::string name, int amount)
     timeBetween = 10.0/sumOfEnemies;
     currentTime = timeBetween;
 }
+
 void Wave::addWaypoint(sf::Vector2f waypoint)
 {
     waypoints.push_back(waypoint);
@@ -39,8 +40,8 @@ void Wave::onUpdate(const sf::Time& delta)
         while(currentTime > timeBetween && indexofEnemy < enemiesNames.size())
         {
             currentTime -= timeBetween;
-            enemies.push_back(create<Enemy>(shared_from_this(), prototypes[enemiesNames[indexofEnemy]]));//TODO ysort
-            enemies.back()->setPosition(waypoints[0]);
+            enemies.push_back(create<Enemy>(ysort, prototypes[enemiesNames[indexofEnemy]]));
+            enemies.back()->setTranslation(waypoints[0]);
             enemies.back()->setScale(4);
             for(sf::Vector2f waypoint : waypoints)
             {

@@ -37,11 +37,6 @@ Enemy::Enemy(EnemyPrototype p)
 {
 }
 
-void Enemy::setPosition(sf::Vector2f newPosition)
-{
-    body.setPosition(newPosition);
-}
-
 void Enemy::stopMoving()
 {
     isMoving = false;
@@ -81,19 +76,19 @@ void Enemy::onUpdate(const sf::Time& delta)
                 HasBeenHit = false;
             }
         } else {
-            sf::Vector2f newPosition = NewPositionByWaypoints(delta);
-            if (newPosition.x > body.getPosition().x) {
+            sf::Vector2f newTranslate = NewTranslateByWaypoints(delta);
+            if (newTranslate.x > getGlobalTranslation().x) {
                 isFacingRight = true;
-            } else if (newPosition.x < body.getPosition().x) {
+            } else if (newTranslate.x < getGlobalTranslation().x) {
                 isFacingRight = false;
             }
-            if (newPosition.x - body.getPosition().x != 0.0 ||
-                newPosition.y - body.getPosition().y != 0.0) {
+            if (newTranslate.x - getGlobalTranslation().x != 0.0 ||
+                newTranslate.y - getGlobalTranslation().y != 0.0) {
                 animationManager.play("run");
             } else {
                 animationManager.play("idle");
             }
-            body.setPosition(newPosition);
+            setTranslation(newTranslate);
         }
     }
 

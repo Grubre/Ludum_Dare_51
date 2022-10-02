@@ -81,6 +81,9 @@ class Node : public std::enable_shared_from_this<Node>
     sf::Vector2f getLocalTranslation() { return local_transform.getPosition(); }
     float getLocalRotation() { return local_transform.getRotation(); }
     sf::Vector2f getLocalScale() { return local_transform.getScale(); }
+
+    template<bool (*comparator)(std::shared_ptr<Node> const &, std::shared_ptr<Node> const &)>
+    friend class SortNode;
 };
 
 template<class T, typename... Us>

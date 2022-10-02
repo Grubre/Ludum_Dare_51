@@ -19,19 +19,19 @@ void MovingNode::addNewWaypoint(sf::Vector2f n)
     waypoints.push(n);
 }
 
-sf::Vector2f MovingNode::NewPositionByWaypoints(const sf::Time& delta)
+sf::Vector2f MovingNode::NewTranslateByWaypoints(const sf::Time& delta)
 {
-    sf::Vector2f newPositon = body.getPosition();
+    sf::Vector2f newTranslate = getGlobalTranslation();
     float distanceToWalk = speed * delta.asSeconds();
     while(distanceToWalk > 0.0 && !waypoints.empty())
     {
         float Ydiff, Xdiff;
         int Ysign, Xsign;
 
-        Ydiff = waypoints.front().y - body.getPosition().y;
+        Ydiff = waypoints.front().y - getGlobalTranslation().y;
         Ysign = Ydiff > 0 ? 1 : -1;
 
-        Xdiff = waypoints.front().x - body.getPosition().x;
+        Xdiff = waypoints.front().x - getGlobalTranslation().x;
         Xsign = Xdiff > 0 ? 1 : -1;
 
         float distanceToNextWaypoint = sqrt(pow(Xdiff, 2) + pow(Ydiff, 2));
@@ -39,7 +39,7 @@ sf::Vector2f MovingNode::NewPositionByWaypoints(const sf::Time& delta)
         if(distanceToNextWaypoint <= distanceToWalk)
         {
             distanceToWalk -= distanceToNextWaypoint;
-            newPositon = {waypoints.front().x, waypoints.front().y};
+            newTranslate = {waypoints.front().x, waypoints.front().y};
             waypoints.pop();
             continue;
         }
@@ -49,21 +49,21 @@ sf::Vector2f MovingNode::NewPositionByWaypoints(const sf::Time& delta)
         {
             float scaleXtoY = abs(Xdiff/Ydiff);
             float k = sqrt(pow(newDistanceToNextWaypoint,2) / (pow(scaleXtoY, 2) + 1));
-            newPositon =  {waypoints.front().x - Xsign*k * scaleXtoY, waypoints.front().y - Ysign*k};
+            newTranslate =  {waypoints.front().x - Xsign*k * scaleXtoY, waypoints.front().y - Ysign*k};
         }
         else
         {
-            newPositon = {waypoints.front().x - Xsign*newDistanceToNextWaypoint, waypoints.front().y};
+            newTranslate = {waypoints.front().x - Xsign*newDistanceToNextWaypoint, waypoints.front().y};
         }
         
         distanceToWalk = 0.0;
     }
-    return newPositon;
+    return newTranslate;
 }
 
 void MovingNode::onUpdate(const sf::Time& delta)
 {
-    body.setPosition(NewPositionByWaypoints(delta));
+    setTranslation(NewTranslateByWaypoints(delta));
 
     animationManager.update(delta, false);
     body.setTexture(animationManager.getTexture().get());
@@ -72,5 +72,7 @@ void MovingNode::onUpdate(const sf::Time& delta)
 
 void MovingNode::onDraw(Renderer &renderer) const
 {
-    renderer.draw_object_on_layer(body, 1);
+    sf::RenderStates state;
+    state.transform = global_transform.getTransform();
+    renderer.draw_object_on_layer(body, 1, state);
 }
