@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include "ColorMap.hpp"
 
 class Renderer {
     using Layer = sf::RenderTexture;
@@ -19,9 +21,11 @@ class Renderer {
 
         private:
             std::vector<Layer*> m_layers;
+
     };
 
     sf::RenderWindow window;
+    std::shared_ptr<ColorMap> color_map;
     Layers layers;
 
     public:
@@ -30,6 +34,8 @@ class Renderer {
         void draw_object_on_layer(const sf::Drawable &object, int id_layer);
         void draw_object_on_layer(const sf::Drawable &object, int id_layer, const sf::RenderStates& opt_render_states);
         void finish_drawing();
+
+        void resize(unsigned int width, unsigned int height);
         bool is_open();
         bool poll_event(sf::Event &event);
         void close();
