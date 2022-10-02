@@ -20,7 +20,8 @@ font_ptr ResourceLoader::load_font(const std::string &name)
     sf::Font font;
     if(!font.loadFromFile(fonts_path + name))
         std::cerr << "Failed to load [[" << name <<"]] font!" << std::endl;
-    fonts[name] = std::make_shared<sf::Font>(font);
+    if(!fonts.contains(name))
+        fonts[name] = std::make_shared<sf::Font>(font);
     return fonts.at(name);
 }
 

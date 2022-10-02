@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include "Scenes/MainMenuScene.hpp"
 #include "Standard/math.hpp"
 #include "Standard/event.hpp"
 #include "Nodes/Node.hpp"
@@ -14,6 +15,7 @@
 #include "Loaders/ResourceLoader.hpp"
 #include "GUI/Text.hpp"
 #include "Standard/config.hpp"
+#include "Scenes/Scene.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -24,42 +26,48 @@ class Game{
     SoundSystem *soundSystem;
     ResourceLoader *resourceLoader;
     Renderer renderer;
-    KeymapManager keymapManager;
+    KeymapManager* keymapManager;
+
+    Scene* curr_scene;
+    MainMenuScene* mainMenuScene;
 
 public:
     Game(const uint32_t window_width, const uint32_t window_height) :
         musicSystem(MusicSystem::getInstance("assets/Music/")),
         soundSystem(SoundSystem::getInstance("assets/Sounds/")),
         resourceLoader(ResourceLoader::get_instance()),
-        renderer(window_width, window_height)
+        renderer(window_width, window_height),
+        keymapManager(KeymapManager::get_instance())
     {
         LevelWaves::setDirectory("assets/Levels/");
         AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
         resourceLoader->load_font("arial.ttf");
+        mainMenuScene = new MainMenuScene(renderer, &curr_scene);
     }
 
     void loop()
     {
       sf::Clock delta_clock;
-      auto TESTMAINysort = YSort::create<YSort>();
-
-      std::shared_ptr<Node> root = Node::create<Node>();
-      std::shared_ptr<LevelWaves> test = LevelWaves::create<LevelWaves>(TESTMAINysort, "level1.lvl");
-
-      Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
-
-      grid.setScale({5,5});
-
-      keymapManager.register_keymap(sf::Keyboard::Num1, [&test](){test->nextWave();});
-
-      std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
-
-      auto text = Text::create<Text>(resourceLoader->load_font("arial.ttf") , "TEST");
-      text->text().setStyle(sf::Text::Bold | sf::Text::Italic);
-      // text->setCharacterSize(50);
+      
 
       while (renderer.is_open()) {
-        // Process events
+        poll_events();
+
+        sf::Time delta = delta_clock.restart();
+        
+        renderer.begin_drawing();
+
+        mainMenuScene->draw();
+
+        renderer.finish_drawing();
+
+        keymapManager->check_keypresses();
+      }
+    }
+
+private:
+    void poll_events()
+    {
         sf::Event event{};
         while (renderer.poll_event(event)) {
           // Close window: exit
@@ -67,23 +75,5 @@ public:
             renderer.close();
         }
 
-        sf::Time delta = delta_clock.restart();
-        
-        // Clear screen
-        renderer.begin_drawing();
-        // Testing code
-        test->update(delta);
-        TESTMAINysort->update(delta);
-
-        test->draw(renderer);
-        grid.draw(renderer);
-
-        text->draw(renderer);
-        TESTMAINysort->draw(renderer);
-
-        keymapManager.check_keypresses();
-
-        renderer.finish_drawing();
-      }
     }
 };

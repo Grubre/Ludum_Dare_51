@@ -7,19 +7,15 @@
 
 class KeymapManager{
 public:
-    void register_keymap(sf::Keyboard::Key key, const std::function<void()>& func){
-        keymaps[key] = func;
-    }
-    void unregister_keymap(sf::Keyboard::Key key){
-        keymaps.erase(key);
-    }
-    void check_keypresses(){
-        for(const auto&[key, val] : keymaps)
-            if(sf::Keyboard::isKeyPressed(key))
-                val();
-    }
+    void register_keymap(sf::Keyboard::Key key, const std::function<void()>& func);
+    void unregister_keymap(sf::Keyboard::Key key);
+    void check_keypresses();
+
+    static KeymapManager* get_instance();
 
 private:
+    KeymapManager() = default;
     std::map<sf::Keyboard::Key, std::function<void()>> keymaps;
 
+    static KeymapManager* m_instance;
 };
