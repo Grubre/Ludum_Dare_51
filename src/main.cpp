@@ -6,7 +6,7 @@
 #include "Nodes/TestingShape.hpp"
 #include "Nodes/Enemy.hpp"
 #include "Renderer/Renderer.hpp"
-#include "Nodes/Wave.hpp"
+#include "Nodes/LevelWaves.hpp"
 #include "Nodes/Grid.hpp"
 
 #include <cstdint>
@@ -23,6 +23,7 @@ int main() {
   soundSystem->playSound("blipSelect.wav");
 
   TextureLoaderPrototypeFactory::getInstance("assets/Textures/");
+  LevelWaves::setDirectory("assets/Levels/");
 
   constexpr uint32_t w = 1300, h = 800;
   // Create the main window
@@ -31,17 +32,8 @@ int main() {
   sf::Clock delta_clock;
 
   std::shared_ptr<Node> root = Node::create<Node>();
+  std::shared_ptr<LevelWaves> test = LevelWaves::create<LevelWaves>("level1.lvl");
 
-  std::shared_ptr<Wave> test = Wave::create<Wave>(sf::Vector2f(100, 100));
-  test->addEnemy("Orc1", 30);
-  test->addWaypoint({100, 500});
-  test->addWaypoint({300, 500});
-  test->addWaypoint({300, 200});
-  test->addWaypoint({700, 200});
-  test->addWaypoint({700, 600});
-  test->addWaypoint({100, 600});
-  test->addWaypoint({100, 700});
-  test->addWaypoint({1200, 700});
   Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
 
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
@@ -63,17 +55,13 @@ int main() {
     // ts->draw(renderer);
     grid.draw(renderer);
 
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !test->isWaveOn())
+    {
+      std::cout << "NEW WAVE" << std::endl;
+      test->nextWave();
+    }
+
    test->update(delta);
-
-   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-   {
-    test->TurnOnWave();
-   }
-
-   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-   {
-    test->TurnOffWave();
-   }
 
     renderer.begin_drawing();
     test->draw(renderer);
