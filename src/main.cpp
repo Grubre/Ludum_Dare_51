@@ -6,6 +6,7 @@
 #include "Nodes/TestingShape.hpp"
 #include "Nodes/Enemy.hpp"
 #include "Renderer/Renderer.hpp"
+#include "Nodes/Wave.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -21,9 +22,6 @@ int main() {
   soundSystem->playSound("blipSelect.wav");
 
   TextureLoaderPrototypeFactory::getInstance("assets/Textures/");
-  sf::RectangleShape test({200, 200});
-  test.setPosition(300, 300);
-  AnimationManager testAnimationManager("Orc3", {{"idle", 0.25}, {"run", 0.25}}, "run");
 
   constexpr uint32_t w = 1300, h = 800;
   // Create the main window
@@ -33,10 +31,16 @@ int main() {
 
   std::shared_ptr<Node> root = Node::create<Node>();
 
-  std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
-
-  std::shared_ptr<Enemy> orc = Enemy::create<Enemy>("Orc1", 0.5, 0.5, 0.5, 0.5, "hitHurt.wav", "explosion.wav", 700, 120);
-  orc->setScale(5);
+  std::shared_ptr<Wave> test = Wave::create<Wave>(sf::Vector2f(100, 100));
+  test->addEnemy("Orc1", 30);
+  test->addWaypoint({100, 500});
+  test->addWaypoint({300, 500});
+  test->addWaypoint({300, 200});
+  test->addWaypoint({700, 200});
+  test->addWaypoint({700, 600});
+  test->addWaypoint({100, 600});
+  test->addWaypoint({100, 700});
+  test->addWaypoint({1200, 700});
 
   while (renderer.is_open()) {
     // Process events
@@ -49,18 +53,20 @@ int main() {
 
     sf::Time delta = delta_clock.restart();
 
-   
+   test->update(delta);
+
+   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+   {
+    test->TurnOnWave();
+   }
+
+   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+   {
+    test->TurnOffWave();
+   }
 
     renderer.begin_drawing();
-    // Testing code
-    ts->draw(renderer);
-
-    // Update the window
-
-    testAnimationManager.update(delta, false);
-    test.setTexture(testAnimationManager.getTexture().get());
-    test.setTextureRect(testAnimationManager.getIntRect());
-    
+    test->draw(renderer);
     renderer.finish_drawing();
   }
   return EXIT_SUCCESS;

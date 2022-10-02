@@ -1,6 +1,7 @@
 #pragma once
 #include "MovingNode.hpp"
 #include "Music/All.hpp"
+#include "Nodes/EnemyPrototype.hpp"
 
 class Enemy : public MovingNode
 {
@@ -14,6 +15,14 @@ public:
         animationManager.addAnimation("dead", 100);
         isMoving = true;
         soundSystem = SoundSystem::getInstance();
+    }
+ 
+    Enemy(EnemyPrototype p) : Enemy(p.name, p.idleAnimationTime, p.runingAnimationTime, p.dyingAnimationTime, p.hitAnimationTime, p._hurtSound, p._dyingSound, p._speed, p._health)
+    {}
+
+    void setPosition(sf::Vector2f newPosition)
+    {
+        body.setPosition(newPosition);
     }
 
     void stopMoving()
