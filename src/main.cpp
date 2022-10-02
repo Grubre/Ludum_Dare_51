@@ -8,6 +8,7 @@
 #include "Renderer/Renderer.hpp"
 #include "Nodes/LevelWaves.hpp"
 #include "Nodes/Grid.hpp"
+#include "Standard/KeymapManager.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -22,8 +23,8 @@ int main() {
   musicSystem->setVolume("xDeviruchi - Minigame.wav", 0.3);
   soundSystem->playSound("blipSelect.wav");
 
-  TextureLoaderPrototypeFactory::getInstance("assets/Textures/");
   LevelWaves::setDirectory("assets/Levels/");
+  AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
 
   constexpr uint32_t w = 1300, h = 800;
   // Create the main window
@@ -35,6 +36,9 @@ int main() {
   std::shared_ptr<LevelWaves> test = LevelWaves::create<LevelWaves>("level1.lvl");
 
   Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
+  grid.setScale({5,5});
+
+  KeymapManager keymapManager{};
 
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
@@ -52,19 +56,13 @@ int main() {
     // Clear screen
     renderer.begin_drawing();
     // Testing code
-    // ts->draw(renderer);
+    test->update(delta);
+
     grid.draw(renderer);
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !test->isWaveOn())
-    {
-      std::cout << "NEW WAVE" << std::endl;
-      test->nextWave();
-    }
-
-   test->update(delta);
-
-    renderer.begin_drawing();
     test->draw(renderer);
+
+    keymapManager.check_keypresses();
+
     renderer.finish_drawing();
   }
   return EXIT_SUCCESS;

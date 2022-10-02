@@ -1,12 +1,12 @@
-#include"TextureLoader.hpp"
+#include"AnimationLoader.hpp"
 #include<SFML/Graphics/Texture.hpp>
 #include<string>
 #include<iostream>
 #include<filesystem>
 
-std::string TextureLoader::fileFormat = ".png";
+std::string AnimationLoader::fileFormat = ".png";
 
-void TextureLoader::loadTextures(){
+void AnimationLoader::loadTextures(){
     for(const auto &entry: std::filesystem::directory_iterator(directoryPath)){
         sf::Texture texture;
         if(!texture.loadFromFile(entry.path().string())){
@@ -20,16 +20,16 @@ void TextureLoader::loadTextures(){
     }
 }
 
-std::shared_ptr<sf::Texture> TextureLoader::returnTexture(std::string _fileName){
+std::shared_ptr<sf::Texture> AnimationLoader::returnTexture(std::string _fileName){
     return textures.at(_fileName + fileFormat);
 }
 
-int TextureLoader::getAmountOfTextures()
+int AnimationLoader::getAmountOfTextures()
 {
     return textures.size();
 }
 
-bool TextureLoader::checkIfThereIs(std::string fileName)
+bool AnimationLoader::checkIfThereIs(std::string fileName)
 {
     //std::cout << "wants to check " << fileName + fileFormat << " for " << directoryPath << " and count = " << textures.count(fileName + fileFormat) << std::endl;
     return textures.count(fileName + fileFormat);
