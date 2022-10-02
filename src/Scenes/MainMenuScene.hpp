@@ -15,18 +15,23 @@ class MainMenuScene : public Scene{
 public:
     MainMenuScene(Renderer& renderer, Scene** curr_scene_ptr) :
         renderer(renderer), curr_scene_ptr(curr_scene_ptr),
-        text(Text::create<Text>(ResourceLoader::get_instance()->load_font("arial.ttf") , "Main Menu")),
-        ysort(YSort::create<YSort>()),
-        test(LevelWaves::create<LevelWaves>(ysort, "level1.lvl"))
+        text(Text::create<Text>(ResourceLoader::get_instance()->load_font("arial.ttf") , "Main Menu"))
     {
+        ysort = YSort::create<YSort>();
+        test = LevelWaves::create<LevelWaves>(ysort, "level1.lvl");
         KeymapManager::get_instance()->register_keymap(sf::Keyboard::Num1, [this](){
-            this->test->nextWave();
+            test->nextWave();
+            text->text().setString("Wave incoming!");
         });
     }
     virtual void draw() {
         text->draw(renderer);
+        test->draw(renderer);
         ysort->draw(renderer);
     }
     virtual void update([[maybe_unused]]const sf::Time& delta) {
+        test->update(delta);
+        text->update(delta);
+        ysort->update(delta);
     }
 };

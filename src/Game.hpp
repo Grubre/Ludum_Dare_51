@@ -48,7 +48,8 @@ public:
     void loop()
     {
       sf::Clock delta_clock;
-      
+
+
 
       while (renderer.is_open()) {
         poll_events();
@@ -58,6 +59,7 @@ public:
         renderer.begin_drawing();
 
         mainMenuScene->draw();
+        mainMenuScene->update(delta);
 
         renderer.finish_drawing();
 
@@ -74,6 +76,5 @@ private:
         if (event.type == sf::Event::Closed)
             renderer.close();
         }
-
     }
 };
