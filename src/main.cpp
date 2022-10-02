@@ -8,6 +8,7 @@
 #include "Renderer/Renderer.hpp"
 #include "Nodes/Wave.hpp"
 #include "Nodes/Grid.hpp"
+#include "Standard/KeymapManager.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -42,7 +43,13 @@ int main() {
   test->addWaypoint({100, 600});
   test->addWaypoint({100, 700});
   test->addWaypoint({1200, 700});
-  Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
+
+  Grid grid({50,50}, "./assets/Tilesets/outdoors.png", {16,16});
+  grid.setScale({5,5});
+
+  KeymapManager keymapManager{};
+  keymapManager.register_keymap(sf::Keyboard::Num1, [&test](){test->TurnOnWave();});
+  keymapManager.register_keymap(sf::Keyboard::Num2, [&test](){test->TurnOffWave();});
 
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
@@ -60,23 +67,13 @@ int main() {
     // Clear screen
     renderer.begin_drawing();
     // Testing code
-    // ts->draw(renderer);
+    test->update(delta);
+
     grid.draw(renderer);
-
-   test->update(delta);
-
-   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-   {
-    test->TurnOnWave();
-   }
-
-   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-   {
-    test->TurnOffWave();
-   }
-
-    renderer.begin_drawing();
     test->draw(renderer);
+
+    keymapManager.check_keypresses();
+
     renderer.finish_drawing();
   }
   return EXIT_SUCCESS;

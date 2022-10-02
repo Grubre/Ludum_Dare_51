@@ -1,5 +1,6 @@
 #include "Nodes/Grid.hpp"
 #include "Standard/Math/util.hpp"
+#include <SFML/Graphics/CircleShape.hpp>
 #include <iostream>
 
 struct GridLoader{
@@ -11,7 +12,7 @@ struct GridLoader{
         {
             for(int j = 0; j < grid->size.x; j++)
             {
-                grid->setTile({i,j},i % 64);
+                grid->setTile({i,j},i % 10);
             }
         }
     }
@@ -85,9 +86,12 @@ void Grid::setTile(engine::Vec2i position, unsigned int tileID)
 
 void Grid::onDraw(Renderer &renderer) const 
 {
+    sf::CircleShape shape(50);
+    shape.setFillColor(sf::Color(100, 250, 50));
+    renderer.draw_object_on_layer(shape,1);
     sf::RenderStates state;
     state.texture = tileSet.get();
-    // state.transform = global_transform.getTransform();
+    state.transform = global_transform.getTransform();
     renderer.draw_object_on_layer(vertices, 1, state);
 }
 void Grid::onUpdate(const sf::Time& delta) 
