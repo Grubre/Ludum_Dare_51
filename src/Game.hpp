@@ -62,17 +62,19 @@ public:
 
       while (renderer.is_open()) {
         sfEventManager->poll_events(renderer);
+        
+        keymapManager->check_keypresses();
 
         sf::Time delta = delta_clock.restart();
+        
+        mainMenuScene->update(delta);
         
         renderer.begin_drawing();
 
         mainMenuScene->draw();
-        mainMenuScene->update(delta);
 
         renderer.finish_drawing();
 
-        keymapManager->check_keypresses();
       }
     }
 };

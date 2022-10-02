@@ -9,11 +9,6 @@ MovingNode::MovingNode(std::string name, float idleAnimationTime, float _speed) 
     body.setOrigin(size.x/2, size.y/2);
 }
 
-void MovingNode::setScale(float scale)
-{
-    body.setScale(scale, scale);
-}
-
 void MovingNode::addNewWaypoint(sf::Vector2f n)
 {
     waypoints.push(n);

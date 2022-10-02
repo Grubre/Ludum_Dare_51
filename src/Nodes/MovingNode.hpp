@@ -9,8 +9,6 @@ class MovingNode : public Node
 public:
     MovingNode(std::string name, float idleAnimationTime, float _speed);
 
-    void setScale(float scale);
-
     void addNewWaypoint(sf::Vector2f n);
 
 protected:

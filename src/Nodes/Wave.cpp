@@ -42,7 +42,7 @@ void Wave::onUpdate(const sf::Time& delta)
             currentTime -= timeBetween;
             enemies.push_back(create<Enemy>(ysort, prototypes[enemiesNames[indexofEnemy]]));
             enemies.back()->setTranslation(waypoints[0]);
-            enemies.back()->setScale(4);
+            enemies.back()->setScale({4.f,4.f});
             for(sf::Vector2f waypoint : waypoints)
             {
                 enemies.back()->addNewWaypoint(waypoint);
