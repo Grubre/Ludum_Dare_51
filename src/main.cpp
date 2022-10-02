@@ -43,7 +43,7 @@ int main() {
   test->addWaypoint({100, 600});
   test->addWaypoint({100, 700});
   test->addWaypoint({1200, 700});
-  Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
+  Grid grid({50,50}, "./assets/Tilesets/outdoors.png", {16,16});
 
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
@@ -76,7 +76,6 @@ int main() {
     test->TurnOffWave();
    }
 
-    renderer.begin_drawing();
     test->draw(renderer);
     renderer.finish_drawing();
   }
