@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 
 class Renderer {
-
     using Layer = sf::RenderTexture;
 
     class Layers
@@ -26,37 +25,11 @@ class Renderer {
     Layers layers;
 
     public:
-        Renderer(unsigned int width, unsigned int height) : window(sf::VideoMode(width,height), "LD 51") {
-            window.setVerticalSyncEnabled(true);
-            layers.add_layer(window);
-            layers.add_layer(window);
-            layers.add_layer(window);
-        }
-
-        void begin_drawing() {
-            window.clear();
-            layers.clear_all_layers();
-        }
-
-        void draw_object_on_layer(const sf::Drawable &object, int id_layer) {
-            layers.get_layer(id_layer)->draw(object);
-        };
-
-        void finish_drawing() {
-            layers.draw_all_layers(window);
-            window.display();
-        }
-
-        bool is_open() {
-            return window.isOpen();
-        }
-
-        bool poll_event(sf::Event &event) {
-            return window.pollEvent(event);
-        }
-
-        void close() {
-            window.close();
-        }
-
+        Renderer(unsigned int width, unsigned int height);
+        void begin_drawing();
+        void draw_object_on_layer(const sf::Drawable &object, int id_layer);
+        void finish_drawing();
+        bool is_open();
+        bool poll_event(sf::Event &event);
+        void close();
 };

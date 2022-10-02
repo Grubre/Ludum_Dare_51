@@ -40,5 +40,37 @@ void Renderer::Layers::resize_all_layers(const sf::RenderWindow& window) {
     }
 }
 
+Renderer::Renderer(unsigned int width, unsigned int height) : window(sf::VideoMode(width,height), "LD 51") {
+    window.setVerticalSyncEnabled(true);
+    layers.add_layer(window);
+    layers.add_layer(window);
+    layers.add_layer(window);
+}
+
+void Renderer::begin_drawing() {
+    window.clear();
+    layers.clear_all_layers();
+}
+
+void Renderer::draw_object_on_layer(const sf::Drawable &object, int id_layer) {
+    layers.get_layer(id_layer)->draw(object);
+};
+
+void Renderer::finish_drawing() {
+    layers.draw_all_layers(window);
+    window.display();
+}
+
+bool Renderer::is_open() {
+    return window.isOpen();
+}
+
+bool Renderer::poll_event(sf::Event &event) {
+    return window.pollEvent(event);
+}
+
+void Renderer::close() {
+    window.close();
+}
 
 
