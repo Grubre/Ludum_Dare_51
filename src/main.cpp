@@ -6,7 +6,7 @@
 #include "Nodes/TestingShape.hpp"
 #include "Nodes/Enemy.hpp"
 #include "Renderer/Renderer.hpp"
-#include "Nodes/Wave.hpp"
+#include "Nodes/LevelWaves.hpp"
 #include "Nodes/Grid.hpp"
 #include "Standard/KeymapManager.hpp"
 #include "Nodes/SortNode.hpp"
@@ -28,32 +28,22 @@ int main() {
   musicSystem->setVolume("xDeviruchi - Minigame.wav", 0.3);
   soundSystem->playSound("blipSelect.wav");
 
+  LevelWaves::setDirectory("assets/Levels/");
   AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
 
 
   sf::Clock delta_clock;
+  auto TESTMAINysort = YSort::create<YSort>();
 
   std::shared_ptr<Node> root = Node::create<Node>();
+  std::shared_ptr<LevelWaves> test = LevelWaves::create<LevelWaves>(TESTMAINysort, "level1.lvl");
 
-  auto ysort = YSort::create<YSort>();
-
-  std::shared_ptr<Wave> test = Wave::create<Wave>(ysort, sf::Vector2f(100, 100));
-  test->addEnemy("Orc1", 30);
-  test->addWaypoint({100, 500});
-  test->addWaypoint({300, 500});
-  test->addWaypoint({300, 200});
-  test->addWaypoint({700, 200});
-  test->addWaypoint({700, 600});
-  test->addWaypoint({100, 600});
-  test->addWaypoint({100, 700});
-  test->addWaypoint({1200, 700});
-  Grid grid({50,50}, "./assets/Tilesets/outdoors.png", {16,16});
+  Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
 
   grid.setScale({5,5});
 
   KeymapManager keymapManager{};
-  keymapManager.register_keymap(sf::Keyboard::Num1, [&test](){test->TurnOnWave();});
-  keymapManager.register_keymap(sf::Keyboard::Num2, [&test](){test->TurnOffWave();});
+  keymapManager.register_keymap(sf::Keyboard::Num1, [&test](){test->nextWave();});
 
   std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
@@ -71,9 +61,13 @@ int main() {
     // Clear screen
     renderer.begin_drawing();
     // Testing code
-    ysort->update(delta);
+    test->update(delta);
+    TESTMAINysort->update(delta);
+
+
+    test->draw(renderer);
     grid.draw(renderer);
-    ysort->draw(renderer);
+    TESTMAINysort->draw(renderer);
 
     keymapManager.check_keypresses();
 

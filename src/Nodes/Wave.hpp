@@ -1,49 +1,25 @@
 #pragma once
 #include "Enemy.hpp"
 #include "EnemyPrototype.hpp"
+#include "SortNode.hpp"
 #include <vector>
 #include <string>
 
 class Wave : public Node
 {
 public:
-    Wave(sf::Vector2f start)
-    {
-        waypoints.push_back(start);
-    }
+    
+    Wave(std::shared_ptr<YSort> _ysort) : ysort(_ysort)
+    {}
+    void addEnemy(std::string name, int amount);
+    void addWaypoint(sf::Vector2f waypoint);
 
-    void addEnemy(std::string name, int amount)
-    {
-        enemiesNames.push_back(name);
-        amountOfEnemies.push_back(amount);
-        sumOfEnemies += amount;
-        timeBetween = 10.0/sumOfEnemies;
-        currentTime = timeBetween;
-    }
-    void addWaypoint(sf::Vector2f waypoint)
-    {
-        waypoints.push_back(waypoint);
-    }
+    void TurnOnWave();
 
-    void TurnOnWave()
-    {
-        isWaveOn = true;
-        for(std::shared_ptr<Enemy> enemy : enemies)
-        {
-            enemy->startMoving();
-        }
-    }
-
-    void TurnOffWave()
-    {
-        isWaveOn = false;
-        for(std::shared_ptr<Enemy> enemy : enemies)
-        {
-            enemy->stopMoving();
-        }
-    }
+    void TurnOffWave();
 
 private:
+    std::shared_ptr<YSort> ysort;
     bool isWaveOn = false;
     std::vector<std::string> enemiesNames;
     float timeBetween;
@@ -55,29 +31,5 @@ private:
     std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<sf::Vector2f> waypoints;
 
-    void onUpdate(const sf::Time& delta) override
-    {
-        if(isWaveOn)
-        {
-            currentTime += delta.asSeconds();
-            while(currentTime > timeBetween && indexofEnemy < enemiesNames.size())
-            {
-                currentTime -= timeBetween;
-                enemies.push_back(create<Enemy>(shared_from_this(), prototypes[enemiesNames[indexofEnemy]]));
-                enemies.back()->setTranslation(waypoints[0]);
-                enemies.back()->setScale(sf::Vector2f(5.f,5.f));
-                for(sf::Vector2f waypoint : waypoints)
-                {
-                    enemies.back()->addNewWaypoint(waypoint);
-                }
-
-                countOfEnemies++;
-                if(countOfEnemies >= amountOfEnemies[indexofEnemy])
-                {
-                    indexofEnemy++;
-                    countOfEnemies = 0;
-                }
-            }
-        }
-    }
+    void onUpdate(const sf::Time& delta) override;
 };

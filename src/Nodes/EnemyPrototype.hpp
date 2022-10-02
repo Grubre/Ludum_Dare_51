@@ -1,19 +1,14 @@
 #pragma once
 #include <string>
+#include <map>
 
 class EnemyPrototype
 {
 public:
-    EnemyPrototype()
-    {
-        
-    }
+    EnemyPrototype();
+
      EnemyPrototype(std::string _name, float _idleAnimationTime, float _runingAnimationTime, float _dyingAnimationTime, 
-     float _hitAnimationTime, std::string __hurtSound, std::string __dyingSound, float __speed,int __health)
-     : name(_name), idleAnimationTime(_idleAnimationTime), runingAnimationTime(_runingAnimationTime), 
-     dyingAnimationTime(_dyingAnimationTime), hitAnimationTime(_hitAnimationTime), _hurtSound(__hurtSound), 
-     _dyingSound(__dyingSound),_speed(__speed),_health(__health)  
-     {}
+     float _hitAnimationTime, std::string __hurtSound, std::string __dyingSound, float __speed,int __health, float __stopTime);
 
     std::string name; 
     float idleAnimationTime;
@@ -24,9 +19,7 @@ public:
     std::string _dyingSound; 
     float _speed;
     int _health;
+    float _stopTime;
 };
 
-std::map<std::string, EnemyPrototype> prototypes= 
-{
-    {"Orc1", {"Orc1", 0.5, 0.5, 0.5, 0.5, "hitHurt.wav", "explosion.wav", 300.0, 120}}
-};
+extern std::map<std::string, EnemyPrototype> prototypes;
