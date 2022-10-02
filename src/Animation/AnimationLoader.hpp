@@ -5,13 +5,13 @@
 #include<memory>
 #include<string>
 
-class TextureLoader{
+class AnimationLoader{
     public:
-        TextureLoader(std::string _directoryPath){
+        AnimationLoader(std::string _directoryPath){
             directoryPath = _directoryPath;
             loadTextures();
         }
-        TextureLoader()
+        AnimationLoader()
         {
             directoryPath = "BROKEN!";
         }

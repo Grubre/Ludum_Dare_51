@@ -3,12 +3,12 @@
 #include <iostream>
 
 #include "AnimationManager.hpp"
-#include "TextureLoaderPrototypeFactory.hpp"
+#include "AnimationLoaderPrototypeFactory.hpp"
 
 AnimationManager::AnimationManager(std::string animationDirectoryName, std::map<std::string, float> times, std::string _defaultAnimation) 
 : defaultAnimation(_defaultAnimation)
 {
-    TextureLoaderPrototypeFactory *factory = TextureLoaderPrototypeFactory::getInstance();
+    AnimationLoaderPrototypeFactory *factory = AnimationLoaderPrototypeFactory::getInstance();
     loader = factory->make(animationDirectoryName);
 
     for(std::map<std::string, float>::iterator t = times.begin(); t != times.end(); ++t)

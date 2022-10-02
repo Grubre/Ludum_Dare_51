@@ -23,7 +23,7 @@ int main() {
   musicSystem->setVolume("xDeviruchi - Minigame.wav", 0.3);
   soundSystem->playSound("blipSelect.wav");
 
-  TextureLoaderPrototypeFactory::getInstance("assets/Textures/");
+  AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
 
   constexpr uint32_t w = 1300, h = 800;
   // Create the main window

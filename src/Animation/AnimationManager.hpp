@@ -3,7 +3,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
-#include "TextureLoader.hpp"
+#include "AnimationLoader.hpp"
 
 class AnimationManager
 {
@@ -34,6 +34,6 @@ protected:
 
     bool animationPlayOnce;
 
-    std::shared_ptr<TextureLoader> loader;
+    std::shared_ptr<AnimationLoader> loader;
     sf::IntRect intRect;
 };
