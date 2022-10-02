@@ -29,7 +29,7 @@ class Node : public std::enable_shared_from_this<Node>
     sf::Transformable local_transform;
     sf::Transformable global_transform;
     sf::Color color_id;
-    virtual void onDraw(Renderer &renderer) const {}
+    virtual void onDraw([[maybe_unused]]Renderer &renderer) const {}
     virtual void onUpdate([[maybe_unused]] const sf::Time& delta) {}
 
   public:
