@@ -5,10 +5,10 @@
 
 class ColorMap {
     public:
-        ColorMap(sf::RenderWindow& window) {
+        explicit ColorMap(sf::RenderWindow& window) {
             color_texture.create(window.getSize().x, window.getSize().y);
             if(!color_id_shader.loadFromFile("res/shaders/color_id_shader.vert","res/shaders/color_id_shader.frag"))
-                std::cout << "Failed to load shaders!\n";
+                std::cerr << "Failed to load shaders in ColorMap!\n";
             color_id_shader.setUniform("texture", sf::Shader::CurrentTexture);
         }
 
@@ -25,7 +25,7 @@ class ColorMap {
         }
 
         std::optional<sf::Color> get_color_at(engine::Vec2i at) {
-            sf::Vector2i position = sf::Vector2i(at);
+            auto position = sf::Vector2i(at);
             auto image = color_texture.getTexture().copyToImage();
             if(!((position.x < 0 || (unsigned int)position.x >= image.getSize().x) || (position.y < 0 || (unsigned int)position.y >= image.getSize().y)) )
             {

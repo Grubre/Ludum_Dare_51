@@ -9,7 +9,7 @@ class SortNode : public Node{
     }
     void onUpdate([[maybe_unused]] const sf::Time& delta) override
     {
-        std::sort(begin(children), end(children), comparator);
+        std::stable_sort(begin(children), end(children), comparator);
     }
 };
 
