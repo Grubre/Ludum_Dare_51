@@ -11,7 +11,7 @@ struct GridLoader{
             for(int j = 0; j < grid->size.x; j++)
             {
                 int tileID = 1;
-                grid->tiles.emplace_back(tileID, engine::Vec2i(i,j));
+                grid->tiles.push_back(Grid::Tile{1,{i,j}});
             }
         }
     }

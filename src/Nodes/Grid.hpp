@@ -4,6 +4,7 @@
 class Grid : public Node{
     public:
         struct Tile {
+            Tile() = default;
             Tile(unsigned int tile, engine::Vec2i pos) : tile(tile), pos(pos) {}
             unsigned int tile{};
             engine::Vec2i pos{};
