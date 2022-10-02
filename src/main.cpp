@@ -7,6 +7,7 @@
 #include "Nodes/Enemy.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Nodes/Wave.hpp"
+#include "Nodes/Grid.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -41,6 +42,9 @@ int main() {
   test->addWaypoint({100, 600});
   test->addWaypoint({100, 700});
   test->addWaypoint({1200, 700});
+  Grid grid({1,1}, "./assets/Tilesets/outdoors.png", {16,16});
+
+  std::shared_ptr<TestingShape> ts = TestingShape::create<TestingShape>();
 
   while (renderer.is_open()) {
     // Process events
@@ -52,6 +56,12 @@ int main() {
     }
 
     sf::Time delta = delta_clock.restart();
+    
+    // Clear screen
+    renderer.begin_drawing();
+    // Testing code
+    // ts->draw(renderer);
+    grid.draw(renderer);
 
    test->update(delta);
 
