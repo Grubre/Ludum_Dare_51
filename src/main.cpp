@@ -9,6 +9,7 @@
 #include "Nodes/Wave.hpp"
 #include "Nodes/Grid.hpp"
 #include "Standard/KeymapManager.hpp"
+#include "Nodes/SortNode.hpp"
 
 #include <cstdint>
 #include "Music/All.hpp"
@@ -33,7 +34,9 @@ int main() {
 
   std::shared_ptr<Node> root = Node::create<Node>();
 
-  std::shared_ptr<Wave> test = Wave::create<Wave>(sf::Vector2f(100, 100));
+  auto ysort = YSort::create<YSort>();
+
+  std::shared_ptr<Wave> test = Wave::create<Wave>(ysort, sf::Vector2f(100, 100));
   test->addEnemy("Orc1", 30);
   test->addWaypoint({100, 500});
   test->addWaypoint({300, 500});
@@ -43,6 +46,7 @@ int main() {
   test->addWaypoint({100, 600});
   test->addWaypoint({100, 700});
   test->addWaypoint({1200, 700});
+
 
   Grid grid({50,50}, "./assets/Tilesets/outdoors.png", {16,16});
   grid.setScale({5,5});
@@ -58,7 +62,7 @@ int main() {
     sf::Event event{};
     while (renderer.poll_event(event)) {
       // Close window: exit
-      if (event.type == sf::Event::Closed)
+    if (event.type == sf::Event::Closed)
         renderer.close();
     }
 
@@ -67,10 +71,10 @@ int main() {
     // Clear screen
     renderer.begin_drawing();
     // Testing code
-    test->update(delta);
+    ysort->update(delta);
 
     grid.draw(renderer);
-    test->draw(renderer);
+    ysort->draw(renderer);
 
     keymapManager.check_keypresses();
 
