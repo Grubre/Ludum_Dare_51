@@ -56,9 +56,9 @@ public:
         });
     }
 
-    void loop()
+    void start()
     {
-      sf::Clock delta_clock;
+        sf::Clock delta_clock;
 
       while (renderer.is_open()) {
         sfEventManager->poll_events(renderer);
@@ -74,7 +74,6 @@ public:
         mainMenuScene->draw();
 
         renderer.finish_drawing();
-
       }
     }
 };
