@@ -64,8 +64,8 @@ private:
             {
                 currentTime -= timeBetween;
                 enemies.push_back(create<Enemy>(shared_from_this(), prototypes[enemiesNames[indexofEnemy]]));
-                enemies.back()->setPosition(waypoints[0]);
-                enemies.back()->setScale(5);
+                enemies.back()->setTranslation(waypoints[0]);
+                enemies.back()->setScale(sf::Vector2f(5.f,5.f));
                 for(sf::Vector2f waypoint : waypoints)
                 {
                     enemies.back()->addNewWaypoint(waypoint);

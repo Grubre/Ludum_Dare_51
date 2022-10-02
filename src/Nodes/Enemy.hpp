@@ -20,11 +20,6 @@ public:
     Enemy(EnemyPrototype p) : Enemy(p.name, p.idleAnimationTime, p.runingAnimationTime, p.dyingAnimationTime, p.hitAnimationTime, p._hurtSound, p._dyingSound, p._speed, p._health)
     {}
 
-    void setPosition(sf::Vector2f newPosition)
-    {
-        body.setPosition(newPosition);
-    }
-
     void stopMoving()
     {
         isMoving = false;
@@ -86,7 +81,7 @@ private:
             {
                 animationManager.play("idle");
             }
-            body.setPosition(newPosition);
+            this->setTranslation(newPosition);
         }
 
         animationManager.update(delta, isFacingRight);

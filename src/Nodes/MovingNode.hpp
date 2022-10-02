@@ -16,11 +16,6 @@ public:
         body.setOrigin(size.x/2, size.y/2);
     }
 
-    void setScale(float scale)
-    {
-        body.setScale(scale, scale);
-    }
-
     void addNewWaypoint(sf::Vector2f n)
     {
         waypoints.push(n);
@@ -32,17 +27,17 @@ protected:
     float speed;
     sf::Vector2f NewPositionByWaypoints(const sf::Time& delta)
     {
-        sf::Vector2f newPositon = body.getPosition();
+        sf::Vector2f newPositon = this->getLocalTranslation();
         float distanceToWalk = speed * delta.asSeconds();
         while(distanceToWalk > 0.0 && !waypoints.empty())
         {
             float Ydiff, Xdiff;
             int Ysign, Xsign;
 
-            Ydiff = waypoints.front().y - body.getPosition().y;
+            Ydiff = waypoints.front().y - this->getLocalTranslation().y;
             Ysign = Ydiff > 0 ? 1 : -1;
 
-            Xdiff = waypoints.front().x - body.getPosition().x;
+            Xdiff = waypoints.front().x - this->getLocalTranslation().x;
             Xsign = Xdiff > 0 ? 1 : -1;
 
             float distanceToNextWaypoint = sqrt(pow(Xdiff, 2) + pow(Ydiff, 2));
@@ -77,7 +72,7 @@ private:
 
     void onUpdate(const sf::Time& delta) override
     {
-        body.setPosition(NewPositionByWaypoints(delta));
+        this->setTranslation(NewPositionByWaypoints(delta));
 
         animationManager.update(delta, false);
         body.setTexture(animationManager.getTexture().get());
@@ -86,6 +81,8 @@ private:
 
     void onDraw(Renderer &renderer) const override 
     {
-        renderer.draw_object_on_layer(body, 1);
+        sf::RenderStates rs; 
+        rs.transform = this->global_transform.getTransform();
+        renderer.draw_object_on_layer(body, 1, rs);
     }
 };
