@@ -41,6 +41,7 @@ void Renderer::Layers::resize_all_layers(const sf::RenderWindow& window) {
 }
 
 Renderer::Renderer(unsigned int width, unsigned int height) : window(sf::VideoMode(width,height), "LD 51") {
+    color_map = std::make_shared<ColorMap>(window);
     window.setVerticalSyncEnabled(true);
     layers.add_layer(window);
     layers.add_layer(window);
@@ -54,16 +55,22 @@ void Renderer::begin_drawing() {
 
 void Renderer::draw_object_on_layer(const sf::Drawable &object, int id_layer) {
     layers.get_layer(id_layer)->draw(object);
-};
+}
 
 void Renderer::draw_object_on_layer(const sf::Drawable &object, int id_layer, const sf::RenderStates& opt_render_states) {
     layers.get_layer(id_layer)->draw(object,opt_render_states);
-};
+}
 
 
 void Renderer::finish_drawing() {
     layers.draw_all_layers(window);
     window.display();
+}
+
+void Renderer::resize(unsigned int width, unsigned int height) {
+    window.setSize({width, height});
+    layers.resize_all_layers(window);
+    color_map->resize_texture(window);
 }
 
 bool Renderer::is_open() {

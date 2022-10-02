@@ -17,6 +17,10 @@
 
 
 int main() {
+  constexpr uint32_t w = 1300, h = 800;
+  // Create the main window
+  Renderer renderer(w, h);
+ 
   MusicSystem *musicSystem = MusicSystem::getInstance("assets/Music/");
   SoundSystem *soundSystem = SoundSystem::getInstance("assets/Sounds/");
 
@@ -27,9 +31,6 @@ int main() {
   LevelWaves::setDirectory("assets/Levels/");
   AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
 
-  constexpr uint32_t w = 1300, h = 800;
-  // Create the main window
-  Renderer renderer(w, h);
 
   sf::Clock delta_clock;
   auto TESTMAINysort = YSort::create<YSort>();
