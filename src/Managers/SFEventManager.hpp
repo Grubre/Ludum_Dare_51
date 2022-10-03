@@ -12,7 +12,7 @@
 
 class SFEventManager{
 public:
-    void register_event(sf::Event::EventType event, const std::function<void()>& func);
+    void register_event(sf::Event::EventType event, const std::function<void(sf::Event&)>& func);
     void unregister_event(sf::Event::EventType event);
     void poll_events(Renderer& renderer) const;
 
@@ -20,7 +20,7 @@ public:
 
 private:
     SFEventManager() = default;
-    std::map<sf::Event::EventType, std::vector<std::function<void()>>> events;
+    std::map<sf::Event::EventType, std::vector<std::function<void(sf::Event&)>>> events;
 
     static SFEventManager* m_instance;
 };

@@ -1,10 +1,11 @@
 #include "SFEventManager.hpp"
 #include <iostream>
-
+#include <algorithm>
+#include <ranges>
 
 SFEventManager* SFEventManager::m_instance = nullptr;
 
-void SFEventManager::register_event(sf::Event::EventType event, const std::function<void()>& func){
+void SFEventManager::register_event(sf::Event::EventType event, const std::function<void(sf::Event&)>& func){
     events[event].push_back(func);
 }
 void SFEventManager::unregister_event(sf::Event::EventType event){
@@ -17,7 +18,7 @@ void SFEventManager::poll_events(Renderer& renderer) const{
         {
             if(event.type == key)
                 for(auto& callback : val)
-                    callback();
+                    callback(event);
         }
     }
 }

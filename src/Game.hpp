@@ -48,10 +48,10 @@ public:
         resourceLoader->load_font("arial.ttf");
         mainMenuScene = new MainMenuScene(renderer, &curr_scene);
 
-        sfEventManager->register_event(sf::Event::Closed, [this](){
+        sfEventManager->register_event(sf::Event::Closed, [this](sf::Event&){
                 renderer.close();
         });
-        sfEventManager->register_event(sf::Event::MouseButtonPressed, [](){
+        sfEventManager->register_event(sf::Event::MouseButtonPressed, [](sf::Event&){
                 std::cout << "Mouse pressed!\n";
         });
     }
