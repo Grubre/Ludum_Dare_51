@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <optional>
 #include "Standard/math.hpp"
@@ -7,7 +8,7 @@ class ColorMap {
     public:
         explicit ColorMap(sf::RenderWindow& window) {
             color_texture.create(window.getSize().x, window.getSize().y);
-            if(!color_id_shader.loadFromFile("res/shaders/color_id_shader.vert","res/shaders/color_id_shader.frag"))
+            if(!color_id_shader.loadFromFile("assets/Shaders/color_id_shader.vert","assets/Shaders/color_id_shader.frag"))
                 std::cerr << "Failed to load shaders in ColorMap!\n";
             color_id_shader.setUniform("texture", sf::Shader::CurrentTexture);
         }
@@ -17,10 +18,11 @@ class ColorMap {
         }
 
         void draw_object(const sf::Drawable& object) {
-            color_texture.draw(object);
+            color_texture.draw(object, &color_id_shader);
         }
 
         void draw_object(const sf::Drawable& object, sf::RenderStates state) {
+            state.shader = &color_id_shader;
             color_texture.draw(object, state);
         }
 
@@ -41,11 +43,7 @@ class ColorMap {
             return get_color_at(engine::Vec2i(color_texture.mapCoordsToPixel(sf::Vector2f(at))));
         }
 
-    private: 
         sf::Shader color_id_shader;
         sf::RenderTexture color_texture;
-};
-
-class ColorRenderable {
-    virtual void render_to_color_map(ColorMap& color_map) = 0;
+    private: 
 };

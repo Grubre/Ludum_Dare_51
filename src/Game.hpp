@@ -60,6 +60,11 @@ public:
     {
         sf::Clock delta_clock;
 
+      auto ts = TestingShape::create<TestingShape>();
+
+      MouseHandler::initialize(renderer.get_color_map());
+      MouseHandler::get_instance()->register_subscriber(ts);
+
       while (renderer.is_open()) {
         sfEventManager->poll_events(renderer);
         
@@ -70,6 +75,8 @@ public:
         mainMenuScene->update(delta);
         
         renderer.begin_drawing();
+
+        ts->draw(renderer);
 
         mainMenuScene->draw();
 
