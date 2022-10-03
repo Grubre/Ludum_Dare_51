@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Renderer/ColorMap.hpp"
 #include <memory>
+#include <unordered_map>
 #include "Standard/Math/Hashers.hpp"
 
 class MouseSubscriber {
