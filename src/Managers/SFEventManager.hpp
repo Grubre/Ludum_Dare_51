@@ -20,7 +20,7 @@ public:
 
 private:
     SFEventManager() = default;
-    std::map<sf::Event::EventType, std::function<void()>> events;
+    std::map<sf::Event::EventType, std::vector<std::function<void()>>> events;
 
     static SFEventManager* m_instance;
 };

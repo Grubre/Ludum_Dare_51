@@ -15,7 +15,7 @@ public:
 
 private:
     KeymapManager() = default;
-    std::map<sf::Keyboard::Key, std::function<void()>> keymaps;
+    std::map<sf::Keyboard::Key, std::vector<std::function<void()>>> keymaps;
 
     static KeymapManager* m_instance;
 };

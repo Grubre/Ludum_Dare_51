@@ -5,7 +5,7 @@
 SFEventManager* SFEventManager::m_instance = nullptr;
 
 void SFEventManager::register_event(sf::Event::EventType event, const std::function<void()>& func){
-    events[event] = func;
+    events[event].push_back(func);
 }
 void SFEventManager::unregister_event(sf::Event::EventType event){
     events.erase(event);
@@ -16,7 +16,8 @@ void SFEventManager::poll_events(Renderer& renderer) const{
         for(auto[key, val] : events)
         {
             if(event.type == key)
-                val();
+                for(auto& callback : val)
+                    callback();
         }
     }
 }

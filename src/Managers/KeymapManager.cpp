@@ -4,7 +4,7 @@
 KeymapManager* KeymapManager::m_instance = nullptr;
 
 void KeymapManager::register_keymap(sf::Keyboard::Key key, const std::function<void()>& func){
-    keymaps[key] = func;
+    keymaps[key].push_back(func);
 }
 void KeymapManager::unregister_keymap(sf::Keyboard::Key key){
     keymaps.erase(key);
@@ -13,7 +13,8 @@ void KeymapManager::check_keypresses(){
     for(auto[key, val] : keymaps)
     {
         if(sf::Keyboard::isKeyPressed(key))
-            val();
+            for(auto& callback : val)
+                callback();
     }
 }
 

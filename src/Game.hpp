@@ -56,23 +56,23 @@ public:
         });
     }
 
-    void loop()
+    void start()
     {
-      sf::Clock delta_clock;
+        sf::Clock delta_clock;
 
-      while (renderer.is_open()) {
-        sfEventManager->poll_events(renderer);
+        while (renderer.is_open()) {
+            sfEventManager->poll_events(renderer);
 
-        sf::Time delta = delta_clock.restart();
-        
-        renderer.begin_drawing();
+            sf::Time delta = delta_clock.restart();
 
-        mainMenuScene->draw();
-        mainMenuScene->update(delta);
+            renderer.begin_drawing();
 
-        renderer.finish_drawing();
+            mainMenuScene->draw();
+            mainMenuScene->update(delta);
 
-        keymapManager->check_keypresses();
-      }
+            renderer.finish_drawing();
+
+            keymapManager->check_keypresses();
+        }
     }
 };
