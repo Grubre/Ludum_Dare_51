@@ -1,9 +1,9 @@
 #pragma once
-#include "Nodes/Node.hpp"
+#include "GUI/GUI.hpp"
 #include "Standard/config.hpp"
 #include "Loaders/ResourceLoader.hpp"
 
-class Text : public Node{
+class Text : public GUI{
 public:
     explicit Text(std::shared_ptr<sf::Font> font, const std::string &text = "");
 
