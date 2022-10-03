@@ -55,6 +55,9 @@ void Node::setTranslation(sf::Vector2f vec) {
     local_transform.setPosition(vec);
     update_transform();
 }
+void Node::setGlobalTranslation(sf::Vector2f vec) {
+    setTranslation((local_transform.getTransform().getInverse() * global_transform.getTransform()).getInverse() * vec); 
+}
 
 void Node::rotate(float deegres) {
     local_transform.rotate(deegres);
