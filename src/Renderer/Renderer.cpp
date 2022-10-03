@@ -66,6 +66,7 @@ void Renderer::finish_drawing() {
     layers.draw_all_layers(window);
     #ifdef DEBUG_COLORS
         window.draw(sf::Sprite(color_map->color_texture.getTexture()));
+        window.draw(sf::Sprite(color_map->dummy_texture.getTexture()));
     #endif
     window.display();
 }

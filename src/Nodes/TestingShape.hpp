@@ -5,7 +5,7 @@
 
 class TestingShape : public Node, public MouseSubscriber
 {
-    sf::CircleShape shape = sf::CircleShape(40.f);
+    sf::CircleShape shape = sf::CircleShape(100.f);
 
     bool mouse_pressed = false;
     engine::Vec2f rel_clicked_spot;

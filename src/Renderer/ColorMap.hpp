@@ -8,7 +8,7 @@ class ColorMap {
     public:
         explicit ColorMap(sf::RenderWindow& window) {
             color_texture.create(window.getSize().x, window.getSize().y);
-            dummy_texture.create(1,1);
+            dummy_texture.create(50,50);
 
             if(!color_id_shader.loadFromFile("assets/Shaders/color_id_shader.frag", sf::Shader::Fragment))
                 std::cerr << "Failed to load shaders in ColorMap!\n";
@@ -51,15 +51,19 @@ class ColorMap {
         sf::Shader color_id_shader;
         sf::RenderTexture color_texture;
 
-    private:
         sf::RenderTexture dummy_texture;
         sf::Shader dummy_shader;
+    private:
 
         void render_to_dummy_texture(engine::Vec2i at) {
             dummy_texture.clear();
 
+            sf::Vector2f norm_mouse = sf::Vector2f((float)at.x / color_texture.getSize().x, 1 -  (float)at.y / color_texture.getSize().y);
+
             dummy_shader.setUniform("texture", color_texture.getTexture());
-            dummy_shader.setUniform("mouse_pos", sf::Vector2f((float)at.x / color_texture.getSize().x, (float)at.y / color_texture.getSize().y));
+            dummy_shader.setUniform("mouse_pos", norm_mouse);
+
+            std::cout << norm_mouse.x << " " << norm_mouse.y << " " << at << std::endl;
 
             dummy_texture.draw(sf::Sprite(color_texture.getTexture()), &dummy_shader);
 

@@ -62,6 +62,8 @@ public:
 
       auto ts = TestingShape::create<TestingShape>();
 
+      ts->setTranslation({600, 300});
+
       MouseHandler::initialize(renderer.get_color_map());
       MouseHandler::get_instance()->register_subscriber(ts);
 
