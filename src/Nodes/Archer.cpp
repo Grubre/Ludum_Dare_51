@@ -11,7 +11,6 @@ void Archer::onUpdate(const sf::Time& delta)
 {
     if(!isWeaponLoaded)
     {
-        loadWeapon("Bow", 10);
         isWeaponLoaded = true;
     }
 
@@ -38,7 +37,6 @@ void Archer::onUpdate(const sf::Time& delta)
 
     if(Xdiff != 0 || Ydiff != 0)
     {
-        weapon->angle = -atan2(Ydiff, Xdiff);
     }
 
     updateAttack(delta);

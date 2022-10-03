@@ -46,13 +46,12 @@ public:
         LevelWaves::setDirectory("assets/Levels/");
         AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
         resourceLoader->load_font("arial.ttf");
+
         mainMenuScene = new MainMenuScene(renderer, &curr_scene);
+        curr_scene = (Scene*)mainMenuScene;
 
         sfEventManager->register_event(sf::Event::Closed, [this](sf::Event&){
                 renderer.close();
-        });
-        sfEventManager->register_event(sf::Event::MouseButtonPressed, [](sf::Event&){
-                std::cout << "Mouse pressed!\n";
         });
     }
 
@@ -74,13 +73,13 @@ public:
 
         sf::Time delta = delta_clock.restart();
         
-        mainMenuScene->update(delta);
+        curr_scene->update(delta);
         
         renderer.begin_drawing();
 
         ts->draw(renderer);
 
-        mainMenuScene->draw();
+        curr_scene->draw();
 
         renderer.finish_drawing();        
       }

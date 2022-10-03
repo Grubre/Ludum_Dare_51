@@ -6,9 +6,8 @@ Hero::Hero(std::string name, float idleAnimationTime, float _speed, sf::Vector2f
     currentTime = 0.0;
 }
 
-void Hero::loadWeapon(std::string name, float distance)
+void Hero::loadWeapon(float distance)
 {
-    weapon = create<Weapon>(shared_from_this(), name , distance, centerOfWeapon);
 }
 
 void Hero::updateAttack(const sf::Time& delta)

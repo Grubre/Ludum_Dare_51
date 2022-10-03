@@ -1,6 +1,5 @@
 #pragma once
 #include "MovingNode.hpp"
-#include "Weapon.hpp"
 
 class Hero : public MovingNode
 {
@@ -11,8 +10,7 @@ protected:
     float currentTime;
     float attackSpeed;
     sf::Vector2f centerOfWeapon;
-    std::shared_ptr<Weapon> weapon;
-    void loadWeapon(std::string name, float distance);
+    void loadWeapon(float distance);
     void updateAttack(const sf::Time& delta);
     virtual void doAttack();
 };
