@@ -48,12 +48,24 @@ class ColorMap {
             return get_color_at(engine::Vec2i(color_texture.mapCoordsToPixel(sf::Vector2f(at))));
         }
 
+        void set_active_color(sf::Color color) {
+            color_id_shader.setUniform("color_id", sf::Glsl::Vec4(color));
+        }
+
+        void begin_drawing_color() {
+            color_texture.clear();
+        }
+
+        void finish_drawing_color() {
+            color_texture.display();
+        }
+
+    private:
         sf::Shader color_id_shader;
         sf::RenderTexture color_texture;
 
         sf::RenderTexture dummy_texture;
         sf::Shader dummy_shader;
-    private:
 
         void render_to_dummy_texture(engine::Vec2i at) {
             dummy_texture.clear();
@@ -63,7 +75,7 @@ class ColorMap {
             dummy_shader.setUniform("texture", color_texture.getTexture());
             dummy_shader.setUniform("mouse_pos", norm_mouse);
 
-            std::cout << norm_mouse.x << " " << norm_mouse.y << " " << at << std::endl;
+            //std::cout << norm_mouse.x << " " << norm_mouse.y << " " << at << std::endl;
 
             dummy_texture.draw(sf::Sprite(color_texture.getTexture()), &dummy_shader);
 

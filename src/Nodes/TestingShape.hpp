@@ -22,13 +22,13 @@ class TestingShape : public Node, public MouseSubscriber
       std::cout<< "Test " << event.mouseButton.x << " " << event.mouseButton.y << std::endl;
     }
 
-    void handle_move(sf::Event &event) override {
+    void handle_drag(sf::Event &event) override {
       if(mouse_pressed){
         setGlobalTranslation(sf::Vector2f(engine::Vec2f{event.mouseMove.x, event.mouseMove.y} + rel_clicked_spot));
       }
     }
 
-    void handle_release(sf::Event &event) override {
+    void handle_drag_end(sf::Event &event) override {
       mouse_pressed = false;
     }
 

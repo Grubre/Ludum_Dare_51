@@ -11,6 +11,9 @@ class MouseSubscriber {
         virtual void handle_press(sf::Event &event) {};
         virtual void handle_move(sf::Event &event) {};
         virtual void handle_release(sf::Event &event) {};
+        
+        virtual void handle_drag(sf::Event &event) {};
+        virtual void handle_drag_end(sf::Event &event) {};
 };
 
 class MouseHandler {
@@ -35,5 +38,7 @@ class MouseHandler {
 
         std::shared_ptr<ColorMap> color_map;
 
-        std::unordered_map<sf::Color, std::weak_ptr<MouseSubscriber>> color_lookup;  
+        std::unordered_map<sf::Color, std::weak_ptr<MouseSubscriber>> color_lookup;
+
+        std::weak_ptr<MouseSubscriber> dragged_object;
 };

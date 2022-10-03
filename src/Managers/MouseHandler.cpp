@@ -29,11 +29,11 @@ MouseHandler* MouseHandler::get_instance()
 }
 
 void MouseHandler::render_colors() {
-    color_map->color_texture.clear();
+    color_map->begin_drawing_color();
     auto it = color_lookup.begin();
     while(it != color_lookup.end()) {
         if(auto renderable_object = it->second.lock()) {
-            color_map->color_id_shader.setUniform("color_id", sf::Glsl::Vec4(it->first));
+            color_map->set_active_color(it->first);
             renderable_object->render_to_color_map(*color_map);
             it++;
         }
@@ -41,7 +41,7 @@ void MouseHandler::render_colors() {
             it = color_lookup.erase(it);
         }
     }
-    color_map->color_texture.display();
+    color_map->finish_drawing_color();
 }
 
 void MouseHandler::register_subscriber(std::weak_ptr<MouseSubscriber> subscriber) {
@@ -58,7 +58,6 @@ std::optional<std::shared_ptr<MouseSubscriber>> MouseHandler::get_object_at_mous
     render_colors();
     auto color = color_map->get_color_at_world({x,y});
 
-
     if(color) {
         if (auto obj = color_lookup[color.value()].lock())
             return obj;
@@ -68,16 +67,28 @@ std::optional<std::shared_ptr<MouseSubscriber>> MouseHandler::get_object_at_mous
 }
 
 void MouseHandler::handle_press(sf::Event &event) {
-    if (auto obj = get_object_at_mouse_position(event.mouseButton.x, event.mouseButton.y))
-        obj.value()->handle_press(event);
+    if (auto obj = get_object_at_mouse_position(event.mouseButton.x, event.mouseButton.y)) {
+        auto unwrapped_obj = obj.value();
+        dragged_object = unwrapped_obj;
+        unwrapped_obj->handle_press(event);
+    }
 }
 
 void MouseHandler::handle_move(sf::Event &event) {
     if (auto obj = get_object_at_mouse_position(event.mouseMove.x, event.mouseMove.y))
         obj.value()->handle_move(event);
+    
+    if(auto obj = dragged_object.lock()) {
+        obj->handle_drag(event);
+    }
 }
 
 void MouseHandler::handle_release(sf::Event &event) {
     if (auto obj = get_object_at_mouse_position(event.mouseButton.x, event.mouseButton.y))
         obj.value()->handle_release(event);
+
+    if(auto obj = dragged_object.lock()) {
+        obj->handle_drag_end(event);
+        dragged_object.reset();
+    }
 }
