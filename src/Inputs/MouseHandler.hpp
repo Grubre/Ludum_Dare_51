@@ -9,9 +9,9 @@ class MouseHandler {
         static MouseHandler* get_instance();
         static void initialize(std::shared_ptr<ColorMap> color_map);
 
-        void handle_press();
-        void handle_move();
-        void handle_release();
+        void handle_press(sf::Event &event);
+        void handle_move(sf::Event &event);
+        void handle_release(sf::Event &event);
 
         auto get_pointed_object(){
             return color_map->get_color_at(engine::Vec2i{sf::Mouse::getPosition()});
