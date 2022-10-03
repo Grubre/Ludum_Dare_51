@@ -6,7 +6,7 @@ MovingNode::MovingNode(std::string name, float idleAnimationTime, float _speed) 
     sf::Vector2u TextureSize(animationManager.getTexture().get()->getSize());
     sf::Vector2f size(TextureSize.x, TextureSize.y);
     body.setSize(size);
-    body.setOrigin(size.x/2, size.y/2);
+    body.setOrigin(size.x/2, size.y);
 }
 
 void MovingNode::addNewWaypoint(sf::Vector2f n)

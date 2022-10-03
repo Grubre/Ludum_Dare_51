@@ -20,10 +20,24 @@ r 1200 700
 e Orc3 10
 e Orc4 10
 
-
 w 3
 r 100 100
 r 400 100
 r 400 700
 r 1200 700
-e Orc2 300
+e Undead1 1
+e Undead2 1
+e Undead3 1
+e Undead4 1
+e Undead5 1
+
+w 4
+r 100 100
+r 400 100
+r 400 700
+r 1200 700
+e Demon1 1
+e Demon2 1
+e Demon3 1
+e Demon4 1
+e Demon5 1
