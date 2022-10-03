@@ -10,7 +10,8 @@
 #include "Renderer/Renderer.hpp"
 #include "Nodes/LevelWaves.hpp"
 #include "Nodes/Grid.hpp"
-#include "Standard/KeymapManager.hpp"
+#include "Managers/KeymapManager.hpp"
+#include "Managers/SFEventManager.hpp"
 #include "Nodes/SortNode.hpp"
 #include "Loaders/ResourceLoader.hpp"
 #include "GUI/Text.hpp"
@@ -26,7 +27,9 @@ class Game{
     SoundSystem *soundSystem;
     ResourceLoader *resourceLoader;
     Renderer renderer;
+
     KeymapManager* keymapManager;
+    SFEventManager* sfEventManager;
 
     Scene* curr_scene;
     MainMenuScene* mainMenuScene;
@@ -37,22 +40,28 @@ public:
         soundSystem(SoundSystem::getInstance("assets/Sounds/")),
         resourceLoader(ResourceLoader::get_instance()),
         renderer(window_width, window_height),
-        keymapManager(KeymapManager::get_instance())
+        keymapManager(KeymapManager::get_instance()),
+        sfEventManager(SFEventManager::get_instance())
     {
         LevelWaves::setDirectory("assets/Levels/");
         AnimationLoaderPrototypeFactory::getInstance("assets/Textures/");
         resourceLoader->load_font("arial.ttf");
         mainMenuScene = new MainMenuScene(renderer, &curr_scene);
+
+        sfEventManager->register_event(sf::Event::Closed, [this](){
+                renderer.close();
+        });
+        sfEventManager->register_event(sf::Event::MouseButtonPressed, [](){
+                std::cout << "Mouse pressed!\n";
+        });
     }
 
     void loop()
     {
       sf::Clock delta_clock;
 
-
-
       while (renderer.is_open()) {
-        poll_events();
+        sfEventManager->poll_events(renderer);
 
         sf::Time delta = delta_clock.restart();
         
@@ -65,16 +74,5 @@ public:
 
         keymapManager->check_keypresses();
       }
-    }
-
-private:
-    void poll_events()
-    {
-        sf::Event event{};
-        while (renderer.poll_event(event)) {
-          // Close window: exit
-        if (event.type == sf::Event::Closed)
-            renderer.close();
-        }
     }
 };

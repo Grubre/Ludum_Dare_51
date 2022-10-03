@@ -3,7 +3,7 @@
 #include "Nodes/SortNode.hpp"
 #include "Scenes/Scene.hpp"
 #include "GUI/Text.hpp"
-#include "Standard/KeymapManager.hpp""
+#include "Managers/KeymapManager.hpp""
 
 class MainMenuScene : public Scene{
     Renderer& renderer;
@@ -15,10 +15,10 @@ class MainMenuScene : public Scene{
 public:
     MainMenuScene(Renderer& renderer, Scene** curr_scene_ptr) :
         renderer(renderer), curr_scene_ptr(curr_scene_ptr),
-        text(Text::create<Text>(ResourceLoader::get_instance()->load_font("arial.ttf") , "Main Menu"))
+        text(Text::create<Text>(ResourceLoader::get_instance()->load_font("arial.ttf") , "Main Menu")),
+        ysort(YSort::create<YSort>()),
+        test(LevelWaves::create<LevelWaves>(ysort, "level1.lvl"))
     {
-        ysort = YSort::create<YSort>();
-        test = LevelWaves::create<LevelWaves>(ysort, "level1.lvl");
         KeymapManager::get_instance()->register_keymap(sf::Keyboard::Num1, [this](){
             test->nextWave();
             text->text().setString("Wave incoming!");
