@@ -30,7 +30,7 @@ void Renderer::Layers::draw_all_layers(sf::RenderWindow& window) {
     {
         m_layers[i]->display();
         window.draw(sf::Sprite(m_layers[i]->getTexture()));
-    }
+    }   
 }
 
 void Renderer::Layers::resize_all_layers(const sf::RenderWindow& window) {
@@ -64,6 +64,9 @@ void Renderer::draw_object_on_layer(const sf::Drawable &object, int id_layer, co
 
 void Renderer::finish_drawing() {
     layers.draw_all_layers(window);
+    #ifdef DEBUG_COLORS
+        window.draw(sf::Sprite(color_map->color_texture.getTexture()));
+    #endif
     window.display();
 }
 

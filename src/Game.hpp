@@ -80,7 +80,7 @@ public:
 
         mainMenuScene->draw();
 
-        renderer.finish_drawing();
+        renderer.finish_drawing();        
       }
     }
 };

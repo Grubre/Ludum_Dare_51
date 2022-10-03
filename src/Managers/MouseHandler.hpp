@@ -25,6 +25,8 @@ class MouseHandler {
         void register_subscriber(std::weak_ptr<MouseSubscriber> subscriber);
 
     private:
+        int counter = 0;
+
         static MouseHandler* m_instance;
 
         explicit MouseHandler(std::shared_ptr<ColorMap> color_map);
