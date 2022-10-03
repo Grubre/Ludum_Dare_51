@@ -16,6 +16,7 @@ public:
 protected:
     AnimationManager animationManager;
     sf::RectangleShape body;
+    bool isFacingRight;
     float speed;
     sf::Vector2f NewTranslateByWaypoints(const sf::Time& delta);
 

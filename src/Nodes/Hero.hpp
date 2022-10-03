@@ -5,9 +5,14 @@
 class Hero : public MovingNode
 {
 public:
-    Hero(std::string name, float idleAnimationTime, float _speed);
+    Hero(std::string name, float idleAnimationTime, float _speed, sf::Vector2f _centerOfWeapon, float _attackSpeed);
 
 protected:
+    float currentTime;
+    float attackSpeed;
+    sf::Vector2f centerOfWeapon;
     std::shared_ptr<Weapon> weapon;
-    void loadWeapon(std::string name, float distance, sf::Vector2f center);
+    void loadWeapon(std::string name, float distance);
+    void updateAttack(const sf::Time& delta);
+    virtual void doAttack();
 };

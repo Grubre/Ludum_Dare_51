@@ -29,7 +29,6 @@ class Enemy : public MovingNode
     float stopTime;
     bool HasBeenHit;
     int health;
-    bool isFacingRight;
     bool isMoving;
     SoundSystem* soundSystem;
     std::string hurtSound;

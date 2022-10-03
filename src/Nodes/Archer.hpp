@@ -5,12 +5,10 @@
 class Archer : public Hero
 {
 public:
-    Archer(std::string name, float idleAnimationTime, float _speed);
-
-protected:
-    float attackSpeed;
-    int damage;
+    Archer(float idleAnimationTime, float runAnimationTime, float _speed, sf::Vector2f _centerOfWeapon, float _attackSpeed);
 
 private:
+    bool isWeaponLoaded;
     void onUpdate(const sf::Time& delta) override;
+    void doAttack() override;
 };
