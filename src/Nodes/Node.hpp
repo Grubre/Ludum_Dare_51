@@ -65,6 +65,7 @@ class Node : public std::enable_shared_from_this<Node>
     void translate(sf::Vector2f vec);
     // void setTranslation(float x, float y);
     void setTranslation(sf::Vector2f vec);
+    void setGlobalTranslation(sf::Vector2f vec);
     void rotate(float deegres);
     void setRotation(float deegres);
     // void scale(float x, float y);

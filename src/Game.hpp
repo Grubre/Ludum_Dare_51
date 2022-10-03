@@ -60,19 +60,29 @@ public:
     {
         sf::Clock delta_clock;
 
-        while (renderer.is_open()) {
-            sfEventManager->poll_events(renderer);
+      auto ts = TestingShape::create<TestingShape>();
 
-            sf::Time delta = delta_clock.restart();
+      ts->setTranslation({600, 300});
 
-            renderer.begin_drawing();
+      MouseHandler::initialize(renderer.get_color_map());
+      MouseHandler::get_instance()->register_subscriber(ts);
 
-            mainMenuScene->draw();
-            mainMenuScene->update(delta);
+      while (renderer.is_open()) {
+        sfEventManager->poll_events(renderer);
+        
+        keymapManager->check_keypresses();
 
-            renderer.finish_drawing();
+        sf::Time delta = delta_clock.restart();
+        
+        mainMenuScene->update(delta);
+        
+        renderer.begin_drawing();
 
-            keymapManager->check_keypresses();
-        }
+        ts->draw(renderer);
+
+        mainMenuScene->draw();
+
+        renderer.finish_drawing();        
+      }
     }
 };

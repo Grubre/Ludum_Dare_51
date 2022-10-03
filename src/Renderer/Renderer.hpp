@@ -35,6 +35,8 @@ class Renderer {
         void draw_object_on_layer(const sf::Drawable &object, int id_layer, const sf::RenderStates& opt_render_states);
         void finish_drawing();
 
+        std::shared_ptr<ColorMap> get_color_map() {return color_map;}
+
         void resize(unsigned int width, unsigned int height);
         bool is_open();
         bool poll_event(sf::Event &event);

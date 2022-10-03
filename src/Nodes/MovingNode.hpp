@@ -9,13 +9,12 @@ class MovingNode : public Node
 public:
     MovingNode(std::string name, float idleAnimationTime, float _speed);
 
-    void setScale(float scale);
-
     void addNewWaypoint(sf::Vector2f n);
 
 protected:
     AnimationManager animationManager;
     sf::RectangleShape body;
+    bool isFacingRight;
     float speed;
     sf::Vector2f NewTranslateByWaypoints(const sf::Time& delta);
 
